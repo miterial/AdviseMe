@@ -5,18 +5,22 @@
 
 class Fill_DB {
 
-	private $_movieID;
-	private $_movieTitle;
+	private $movieID;
+	private $mTitle = array();
 
-	function __construct(array $id, array $title){
-		$this->_movieID = $id;
-		$this->_movieTitle = $title;
-        echo 'Success 0' . '</br>';
-		$this->fill_db();
+	function __construct(array $iddd, array $titleee){
+		echo $titleee[0];
+		$this->movieID = $idddd;
+		$this->movieTitle = $titleee;
+		echo $movieTitle[0];
+		if($_movieTitle) {
+	        echo 'Success 0' . '</br>';
+			$this->fill_db();
+		}
 	}
 
 	function fill_db(){
-        echo 'Success 1' . '</br>';
+        echo 'Enter fill_db' . '</br>';
 		wp_suspend_cache_addition( true ); // отключаем кэширование
 
 		// Контент
@@ -26,7 +30,7 @@ class Fill_DB {
 			//запускаем цикл
 			for( $i=1; $i<=$limit; $i++ ){
 				$rand = (string) rand(1,99999);
-        echo 'Success 2' . '</br>';
+        		echo 'Enter loop' . '</br>';
 
 
 				$post_date = $this->get_random('2011|2012').'-0'.rand(1,9).'-'.rand(10,30).' 23:25:59';
@@ -54,12 +58,12 @@ class Fill_DB {
 				  'post_password' => //[ ? ] password for post? def:
 
 				*/
+				  echo $_movieTitle[$i];
 				$postid = wp_insert_post( array(
-					'post_category'  => array( '2' ),
 					'post_title'     => $_movieTitle[$i],
 					'post_status'    => 'publish',
 				) );
-        echo 'Success 3' . '</br>';
+        		echo 'Post ID: ' . $postid . '</br>';
 
 				if( $postid ){
 
@@ -70,7 +74,6 @@ class Fill_DB {
 				//if($postid) echo $postid.", ";
 				//else echo "error";
 				flush();
-				echo 'Success' . '</br>';
 			}
 		
 

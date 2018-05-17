@@ -49,7 +49,7 @@
                       }
                     }
 
-                      new Fill_DB($idsArr, $titlesArr);
+                      new Fill_DB($idsArr, $titlesArr); 
                     $conn->close();
                   }
                 ?>
@@ -106,100 +106,100 @@
     <h1 class="text-center py-3">Рекомендованные фильмы</h1>
     <div class="filtered-movies container">
       <div class="d-flex flex-wrap text-center">
-
-        <div class="filtered-movies--item">
-          <a href="/movie.html">
-            <img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-            <div class="text-center">
-              <p>Title</p>
-            </div>
-          </a>
-        </div>
-
-
-
-
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
-                <div class="text-center">
-                  <p>Title</p>
-                </div></a></div>
-                <?php
-    if ( have_posts() ) : ?>
       <?php
-      /* Start the Loop */
-      while ( have_posts() ) : the_post();
+              $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+              $params = array(
+                'posts_per_page' => 18, // количество постов на странице
+                'paged'           => $current_page // текущая страница
+              );
+              query_posts($params);
+           
+          $wp_query->is_archive = true;
+          $wp_query->is_home = false;
+          if ( have_posts() ) : ?>
+            <?php
+            /* Start the Loop */
+            while ( have_posts() ) : the_post(); ?>
 
-        get_template_part( 'template-parts/post/content', 'list' );
+              <div class="filtered-movies--item">
+                <a href="<?php the_permalink(); ?>">
+                  <img src="<?php the_field('poster'); ?>" alt="movie" width="150px"/>
+                  <div class="text-center">
+                    <p><?php the_title()?></p>
+                  </div>
+                </a>
+              </div>
 
-      endwhile;
+            <?php endwhile; ?>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+            <div class="filtered-movies--item"><a href="/movie.html"><img src="http://static.hdrezka.ac/i/2016/10/2/n96c764988a92nm60j31w.jpg" alt="movie" width="150px"/>
+                <div class="text-center">
+                  <p>Title</p>
+                </div></a></div>
+    <?php 
 
       the_posts_pagination( array(
         'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
