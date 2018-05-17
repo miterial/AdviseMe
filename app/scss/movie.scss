@@ -1,0 +1,66 @@
+.movie-detail {
+	top:0;
+
+	.upper {
+		position: relative;
+		top: -160px;
+
+		.prediction {
+			font-size: 1.2em;
+			color: $red;
+			font-weight: bold;
+		}
+
+		.movies-related {
+			border: 1px solid #f4f4f4;
+			padding: 1em;
+			text-align: center;
+
+			p {
+				font-weight: bold;
+				color: $red;
+			}
+		}
+
+		.movie-detail--list {
+			font-weight: normal;
+		}
+
+		.movie-detail--list:hover {
+			font-weight: bold;
+		}
+
+		.movie-review {	
+			border-bottom: 1px solid $orange;
+			margin-bottom: 1em;
+		}
+
+		#more {
+			 border:none;
+		    background-image:none;
+		    background-color:transparent;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+		    box-shadow: none;
+		    color: $red;
+		    cursor: pointer;
+		}
+
+		.movie-makers {
+			font-size: 1.1em;
+			font-weight: bold;
+			border-bottom: 1px solid $orange;
+		}
+
+	}
+
+	.movie-detail--poster {
+		height: 70vh;
+		width: 100%;
+		background: url('https://i1.wp.com/www.heyuguys.com/images/2018/03/Westworld-Season-2-Image-12.jpg?fit=2700%2C1800&ssl=1');
+		background-repeat: no-repeat;
+		background-position: top;
+		background-size: cover;
+	}
+	
+}

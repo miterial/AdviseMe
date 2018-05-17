@@ -1,0 +1,84 @@
+.search-bar {
+	vertical-align: middle;
+ 	white-space: nowrap;
+  	position: relative;
+
+	input#search {
+		@extend %mybutton;
+		border-color: $violet;
+		float: left;
+  		padding-left: 45px;
+	}
+
+	input.search-icon {
+		position: absolute;
+		  top: 50%;
+		  margin-left: 17px;
+		  margin-top: 17px;
+		  z-index: 1;
+		  color: #4f5b66;
+	}
+}
+.lblInp {
+  position: relative;
+  display: block;
+  height: 33px;
+  cursor: text;
+  width: 200px;
+}
+.lblInp input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  padding: 0;
+  padding-left: 32px;
+  border-radius: 2px;
+  background: $violet;
+  transition: all 0.3s ease;
+  vertical-align: bottom;
+  font-size: 16px;
+}
+.lblInp input:focus,
+.lblInp input.filled {
+  height: 100%;
+  outline: none;
+}
+.lblInp input:focus + label,
+.lblInp input.filled + label {
+  position: absolute;
+  transform: translateY(-34px);
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+.lblInp input:focus + label + i,
+.lblInp input.filled + label + i {
+  transform: translateY(0px);
+  visibility: visible;
+  transition: transform 0.3s ease;
+}
+.lblInp input +label {
+  font-weight: 400;
+	color: grey;
+	line-height: 40px;
+	padding-left: 75px;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.lblInp input +label + i {
+  position: absolute;
+  display: block;
+  visibility: hidden;
+  left: 10px;
+  transform: translateY(10px);
+  color: #ddd;
+  z-index: 1;
+}
+      
+.fa-search {
+  font-size: 14px;
+  top: 10px;
+  color: #000;
+}

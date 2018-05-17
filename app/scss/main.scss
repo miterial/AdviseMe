@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans');
+
+html [lang="ru-RU"]{
+  position: relative;
+  min-height: 100%;
+
+	h1, h2,h3, h4, h5, h6, p, a, li {
+		font-family: 'Alegreya Sans', sans-serif;
+		font-weight: 400!important;
+	}
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+a {
+	text-decoration: none;
+	color: grey;
+}
+
+a:hover {
+	text-decoration: none;
+	color: $red;
+	font-weight: bold;
+}
+
+%btn-border {
+	border: solid 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+%mybutton {
+	width: $button-width;
+	height: $button-height;
+	@extend %btn-border;
+	outline: none;
+	margin: 0 auto;
+}
+
+
+%centered_absolute {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+%link-hover {
+	border-bottom: 5px solid $red;
+}
+
+.row {
+	margin: 0;
+}
+
+.title {
+	h1 {
+		color: $orange;
+	}
+}
+
+.tostart {
+	background-color: $red;
+	color: #fff;
+	text-align: center;
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+
+.dark-button {
+	@extend %mybutton;
+	display: block;
+	background-color: $violet;
+	border: solid 2px;
+	border-color: white;
+	display: inline-block;
+	padding: 5px 15px;
+	text-decoration: none;
+	color: #fff;
+}
+
+.dark-button:hover {
+	cursor: pointer;
+	background-color: rgba(77,40,70,1);
+	text-decoration: none;
+	color: #fff;
+}
+
+.light-button {
+	@extend %mybutton;
+	display: block;
+	padding: 5px 15px;
+	border-color: $violet;
+	background-color: #fff;
+	color: black;
+}
+
+.light-button:hover {
+	cursor: pointer;
+	text-decoration: none;
+	background-color: #f4f4f4;
+	color: #000;
+}

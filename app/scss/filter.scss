@@ -1,0 +1,103 @@
+.filter {
+	p {
+		height: 3em;
+	}
+	.filter--top {
+		background-color: $red;
+		padding-top: 3%;
+		padding-bottom: 3%;
+
+		h3 {
+			color: white;
+		}
+	}
+	
+	.filter--settings {
+		background-color: $yellow;
+		padding-top: 3%;
+		padding-bottom: 3%;
+
+		#regular-slider {
+			margin-top:0.2em;
+			margin-bottom: 5em;
+		}
+		
+		.toggles {
+			padding: 0;
+
+			li {
+				list-style-type: none;
+				display: inline;
+			}
+
+			.tgl-skewed {
+				display: none;
+
+				+ .tgl-btn {
+					background: white;
+					@extend %btn-border;
+					border-color: $red;
+					outline: 0;
+					cursor: pointer;
+			    	user-select: none;
+			    	padding: 5px;
+			    	padding-left: 15px;
+			    	padding-right: 15px;
+
+					&:hover {
+						background: rgba(157,25,39,0.2);
+					}
+
+					&:after {
+						left: 100%;
+						content: attr(data-tg-on);
+					}
+
+					&:before {
+						left: 0;
+						content: attr(data-tg-off);
+					}
+				}
+
+				&:checked + .tgl-btn {
+				    background: $red;
+				    color: white;
+				}
+			}
+		}
+	}
+}
+
+.filtered-movies {
+
+	.filtered-movies--item {
+		display: block;
+		margin-left: 2em;
+	}
+
+	.pagination {
+		display: inline-block;
+		text-align: center;
+		margin-bottom: 1em;
+
+		li {
+			color: black;
+		    float: left;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		}
+
+		li.active {
+			background-color: $red;
+			color: white;
+		}
+
+		li:hover:not(.active) {
+			background-color: #ddd;
+		}
+	}
+}
+
+.noUi-pips {
+	color: #333;
+}

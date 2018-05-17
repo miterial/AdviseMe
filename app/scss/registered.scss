@@ -1,0 +1,91 @@
+.movieslists {
+	padding-top: 5%;
+	padding-bottom: 5%;
+	background-color: $yellow;
+	position: relative;
+
+	section {
+	  display: none;
+	  padding: 20px 0 0;
+	  width: 90%;
+	}
+
+	.tab-style {
+	  display: none;
+	}
+
+	input[id^="tab"] + label {
+	  display: inline-block;
+	  margin: 0 0 -1px;
+	  padding: 15px 25px;
+	  font-weight: 600;
+	  text-align: center;
+	  color: #000;
+   	  position:relative;
+   	  width: 30%;
+   	  white-space: nowrap;
+	}
+
+	label:hover {
+		cursor: pointer;
+	}
+
+	input[id^="tab"]:hover + label {
+	  	@extend %link-hover;
+	}
+
+	input[id^="tab"]:checked + label {
+	  	@extend %link-hover;
+	}
+
+	#tab1:checked ~ #content1,
+	#tab2:checked ~ #content2,
+	#tab3:checked ~ #content3 {
+	  display: block;
+	}
+
+	.myslyder {
+		position: relative;
+	}
+
+	.slider-item {
+		display: inline-block;
+    	padding-top: 2em;
+	}
+
+	.slick-prev:before {
+		content:"\f0d9";
+	    font: 30px/1 'FontAwesome';
+		color: $red;
+	}
+
+	.slick-next:before {
+		content:"\f0da";
+    	font: 30px/1 'FontAwesome';
+		color: $red;
+	}
+}
+
+.show-more {
+		color: black;
+		font-size: 1.2em;
+		font-weight: bold;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border: 5px solid transparent;
+	}
+
+	.show-more:hover {
+		color: black;
+		text-decoration: none;
+	  	@extend %link-hover;
+	}
+
+.noUi-tooltip {
+    display: none;
+}
+.noUi-active .noUi-tooltip {
+    display: block;
+}
