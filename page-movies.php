@@ -22,35 +22,34 @@
                     $genresToPrint = get_genres($conn); 
                     for($i = 0; $i < count($genresToPrint); $i++) { ?>
                     <li>
-                      <input class="tgl-skewed" type="checkbox" name="movie" id="inp-adventures" value="<?php echo $row["id"] ?>" data-toggle="toggle"/>
-                      <label class="tgl-btn" for="inp-adventures"><?php echo $genresToPrint[$i] ?></label>
+                      <input class="genreToggle tgl-skewed" type="checkbox" name="genreToggle" id="genreToggle_<?php echo $i ?>" value="<?php echo $genresToPrint[$i] ?>" data-toggle="toggle"/>
+                      <label class="tgl-btn" for="genreToggle_<?php echo $i ?>"><?php echo $genresToPrint[$i] ?></label>
                     </li>
                     
                     <?php }
                     //Добавление постов
-                    $movie = get_movies_full($conn, true); 
-                    $conn->close();
-                  }
+                    //$movie = get_movies_full($conn, true); 
+                  
                 ?>
               </ul>
               <h2>Страны</h2>
-              <ul class="toggles">
+              <form method="post" action="">
+              <ul class="toggles toggles__long" style="overflow: hidden;">
                 <?php
-                  $conn = db_connect();
-                  if($conn != null) {
                     $genresToPrint = get_countries($conn); 
                     for($i = 0; $i < count($genresToPrint); $i++) { ?>
                     <li>
-                      <input class="tgl-skewed" type="checkbox" name="movie" id="inp-adventures" value="<?php echo $row["id"] ?>" data-toggle="toggle"/>
-                      <label class="tgl-btn" for="inp-adventures"><?php echo $genresToPrint[$i] ?></label>
+                      <input class="countryToggle tgl-skewed" type="checkbox" name="countryToggle" id="countryToggle_<?php echo $i ?>" value="<?php echo  $genresToPrint[$i] ?>" data-toggle="toggle"/>
+                      <label class="tgl-btn" for="countryToggle_<?php echo $i ?>"><?php echo $genresToPrint[$i] ?></label>
                     </li>
                     
                     <?php }
-                    //Добавление постов
                     $conn->close();
                   }
                 ?>
               </ul>
+              <button id="show_more">Показать больше</button>
+            </form>
             </div>
             <div class="col-lg-6 col-xs-12">
               <h2>Минимальная оценка</h2>
@@ -92,7 +91,7 @@
                   <button class="light-button">Сбросить фильтр</button>
                 </div>
                 <div class="col-auto">
-                  <button class="light-button">Начать поиск</button>
+                  <button id="submit" type="submit" value="Submit" class="light-button">Начать поиск</button>
                 </div>
               </div>
             </div>
@@ -102,7 +101,7 @@
     </div>
     <h1 class="text-center py-3">Рекомендованные фильмы</h1>
     <div class="filtered-movies container">
-      <div class="d-flex flex-wrap text-center">
+        <div id="filterRes"></div>
       <?php
               $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
               $params = array(
@@ -121,26 +120,24 @@
               <div class="filtered-movies--item">
                 <a href="<?php the_permalink(); ?>">
                   <img src="<?php the_field('poster_m'); ?>" alt="movie" width="150px" style='height: 210px'/>
-                  <div class="text-center">
-                    <p><?php the_title()?></p>
-                  </div>
+                  <?php the_title()?>
                 </a>
               </div>
 
             <?php endwhile; ?>
-    <?php 
+          <?php 
 
-      the_posts_pagination( array(
-        'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-        'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
-        'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
-      ) );
+            the_posts_pagination( array(
+              'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
+              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
+              'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
+            ) );
 
-    else :
+          else :
 
-      get_template_part( 'template-parts/post/content', 'none' );
+            get_template_part( 'template-parts/post/content', 'none' );
 
-    endif; ?>
+          endif; ?>
       </div>
     </div>
 

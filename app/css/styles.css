@@ -589,15 +589,31 @@ html[xmlns] .clearfix {
       .filter .filter--settings .toggles .tgl-skewed:checked + .tgl-btn {
         background: #9d1927;
         color: white; }
+  .filter .filter--settings .toggles__long {
+    height: 140px; }
+
+.filtered-movies #filterRes {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center; }
 
 .filtered-movies .filtered-movies--item {
   display: block;
-  margin-left: 2em; }
+  margin-left: 2em;
+  max-width: 150px;
+  text-align: center;
+  min-height: 270px; }
+  .filtered-movies .filtered-movies--item a {
+    font-size: 12px; }
+    .filtered-movies .filtered-movies--item a:hover {
+      color: #9d1927;
+      font-weight: normal; }
 
 .filtered-movies .pagination {
   display: inline-block;
   text-align: center;
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  width: 100%; }
   .filtered-movies .pagination li {
     color: black;
     float: left;
