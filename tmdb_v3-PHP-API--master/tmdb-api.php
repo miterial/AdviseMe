@@ -916,7 +916,7 @@ class TMDB {
 
 		$result = $this->_call('genre/movie/list');
 
-		foreach($result['genres'] as $data){
+		foreach($result['genres'] as $data){ 
 			$genres[] = new Genre($data);
 		}
 
@@ -939,6 +939,17 @@ class TMDB {
 		}
 
 		return $genres;
+	}
+
+	public function extIds($id, $external_source = 'imdb_id'){
+
+		$found;
+
+		$result = $this->_call('movie/'.$id.'/external_ids');
+
+		$found = $result['imdb_id'];
+
+		return $found;
 	}
 
 	//------------------------------------------------------------------------------

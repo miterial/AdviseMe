@@ -345,13 +345,14 @@ function twentyseventeen_widgets_init() {
 	) );
 
 	register_sidebar( array(
-		'name'          => __( 'Footer 2', 'twentyseventeen' ),
-		'id'            => 'sidebar-3',
-		'description'   => __( 'Add widgets here to appear in your footer.', 'twentyseventeen' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
+		'name'          => __( 'Регистрация', 'twentyseventeen' ),
+		'id'            => 'account',
+		'description'   => __( 'Регистрация', 'twentyseventeen' ),
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Вход', 'twentyseventeen' ),
+		'id'            => 'auth',
+		'description'   => __( 'Вход', 'twentyseventeen' ),
 	) );
 }
 add_action( 'widgets_init', 'twentyseventeen_widgets_init' );
@@ -667,7 +668,88 @@ function db_connect() {
 	return $conn;
 }
 
+/* Динамическое добавление элементов в список select в ACF */
+function acf_load_field_genres( $field )
+{
+	// Reset choices
+	$field['choices'] = array();
+ 	
+	// получение массива жанров из БД
+	$conn = db_connect();
+    $choices = get_genres($conn);
 
+    //заполнение поля в ACF
+    if( is_array($choices) ) {
+        foreach( $choices as $choice ) {
+            $field['choices'][ $choice ] = $choice;
+        }
+    }
+    
+    return $field;
+}
+ 
+add_filter('acf/load_field/name=genres', 'acf_load_field_genres');
+
+function acf_load_field_actors( $field )
+{
+	// Reset choices
+	$field['choices'] = array();
+ 	
+	// получение массива жанров из БД
+	$conn = db_connect();
+    $choices = get_actors($conn);
+
+    //заполнение поля в ACF
+    if( is_array($choices) ) {
+        foreach( $choices as $choice ) {
+            $field['choices'][ $choice ] = $choice;
+        }
+    }
+    
+    return $field;
+}
+ 
+add_filter('acf/load_field/name=actors', 'acf_load_field_actors');
+
+/* Перевод на русский имён актёров */
+function transliterate($input){ 
+	$gost = array( "а"=>"a","б"=>"b","в"=>"v","г"=>"g","д"=>"d", "е"=>"e", "ё"=>"yo","ж"=>"j","з"=>"z","и"=>"i", "й"=>"i","к"=>"k","л"=>"l", "м"=>"m","н"=>"n", "о"=>"o","п"=>"p","р"=>"r","с"=>"s","т"=>"t", "у"=>"y","ф"=>"f","х"=>"h","ц"=>"c","ч"=>"ch", "ш"=>"sh","щ"=>"sh","ы"=>"i","э"=>"e","ю"=>"u", "я"=>"ya", "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D", "Е"=>"E","Ё"=>"Yo","Ж"=>"J","З"=>"Z","И"=>"I", "Й"=>"I","К"=>"K","Л"=>"L","М"=>"M","Н"=>"N", "О"=>"O","П"=>"P","Р"=>"R","С"=>"S","Т"=>"T", "У"=>"Y","Ф"=>"F","Х"=>"H","Ц"=>"C","Ч"=>"Ch", "Ш"=>"Sh","Щ"=>"Sh","Ы"=>"I","Э"=>"E","Ю"=>"U", "Я"=>"Ya", "ь"=>"","Ь"=>"","ъ"=>"","Ъ"=>"", "ї"=>"j","і"=>"i","ґ"=>"g","є"=>"ye", "Ї"=>"J","І"=>"I","Ґ"=>"G","Є"=>"YE" );
+ return strtr($input, $gost);
+}
+
+// колонка "ID" в админке
+add_action('admin_init', 'admin_area_ID');
+function admin_area_ID() {
+  // для таксономий (рубрик, меток и т.д.)
+  foreach (get_taxonomies() as $taxonomy) {
+    add_action("manage_edit-${taxonomy}_columns", 'tax_add_col');
+    add_filter("manage_edit-${taxonomy}_sortable_columns", 'tax_add_col');
+    add_filter("manage_${taxonomy}_custom_column", 'tax_show_id', 10, 3);
+  }
+  add_action('admin_print_styles-edit-tags.php', 'tax_id_style');
+  function tax_add_col($columns) {return $columns + array ('tax_id' => 'ID');}
+  function tax_show_id($v, $name, $id) {return 'tax_id' === $name ? $id : $v;}
+  function tax_id_style() {print '<style>#tax_id{width:4em}</style>';}
+  // для постов и страниц
+  add_filter('manage_posts_columns', 'posts_add_col', 5);
+  add_action('manage_posts_custom_column', 'posts_show_id', 5, 2);
+  add_filter('manage_pages_columns', 'posts_add_col', 5);
+  add_action('manage_pages_custom_column', 'posts_show_id', 5, 2);
+  add_action('admin_print_styles-edit.php', 'posts_id_style');
+  function posts_add_col($defaults) {$defaults['wps_post_id'] = __('ID'); return $defaults;}
+  function posts_show_id($column_name, $id) {if ($column_name === 'wps_post_id') echo $id;}
+  function posts_id_style() {print '<style>#wps_post_id{width:4em}</style>';}
+}
+
+/**
+ * Функции регистрации
+ */
+require get_parent_theme_file_path( '/inc/registration.php' );
+
+/**
+ * Функции получения данных фильмов из БД
+ */
+require get_parent_theme_file_path( '/inc/get_movie_info.php' );
 
 /**
  * Функция добавления фильмов
@@ -698,3 +780,8 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+
+/**
+ * Комментарии
+ */
+require get_parent_theme_file_path( '/inc/my-comments.php' );

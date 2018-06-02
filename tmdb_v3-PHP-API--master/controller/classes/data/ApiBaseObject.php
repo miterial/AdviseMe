@@ -32,7 +32,7 @@ class ApiBaseObject
      *
      * 	@param array $data An array with the data of the ApiObject
      */
-    public function __construct($data) {
+    public function __construct($data) { 
         $this->_data = $data;
     }
 
@@ -90,6 +90,17 @@ class ApiBaseObject
 
         foreach ($this->_data['credits'][$key] as $data) {
             $persons[] = new Person($data);
+        }
+
+        return $persons;
+    }
+
+     public function getDirectors(){
+       $persons = [];
+
+        foreach ($this->_data['credits']['crew'] as $data) {
+            if($data['job'] === 'Director')
+                $persons[] = $data['name'];
         }
 
         return $persons;

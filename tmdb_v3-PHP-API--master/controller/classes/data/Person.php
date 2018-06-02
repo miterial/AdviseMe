@@ -116,6 +116,21 @@ class Person{
     }
 
     /**
+     *  Get the Person's MovieRoles
+     *
+     *  @return MovieRole[]
+     */
+    public function getDirectors() {
+        $movieRoles = array();
+
+        foreach($this->_data['movie_credits']['crew'] as $data){
+            $movieRoles[] = new MovieRole($data, $this->getID());
+        }
+
+        return $movieRoles;
+    }
+
+    /**
      *  Get the Person's TVShowRoles
      *
      *  @return TVShowRole[]

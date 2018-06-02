@@ -81,19 +81,18 @@ class Movie extends ApiBaseObject{
 	 *
 	 * 	@return array(int)
 	 */
-	public function getDirectorIds() {
+	public function getDirectorNames() {
 
-		$director_ids = array();
+		$crew = $this->getDirectors();
 
-		$crew = $this->getCrew();
-
-		foreach ($crew as $crew_member) {
+		/*foreach ($crew as $crew_member) {
 
 			if ($crew_member['job'] === 'Director'){
 				$director_ids[] = $crew_member['id'];
 			}
 		}
-		return $director_ids;
+		return $director_ids;*/
+		return $crew;
 	}
 
 	/** 
@@ -158,6 +157,32 @@ class Movie extends ApiBaseObject{
 		}
 		
 		return $companies;
+	}
+
+	/** 
+	 * 	Get the Movie production countries
+	 *
+	 * 	@return array(int)
+	 */
+	public function getMovieCountries() {
+		$countries = [];
+
+		foreach ($this->_data['production_countries'] as $data) {
+			$el = new Company($data);
+			$countries[] = $el->getName();
+		}
+		
+		return $countries;
+	}
+
+
+	/**
+	 * 	Get the Movie's IMDB iD
+	 *
+	 * 	@return string or null
+	 */
+	public function getImdbId() {
+		return $this->_data['imdb_id'];
 	}
 
 	//------------------------------------------------------------------------------

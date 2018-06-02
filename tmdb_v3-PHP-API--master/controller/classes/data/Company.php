@@ -86,12 +86,12 @@ class Company {
     }
 
     /** 
-     *  Get the Company's parent company id
+     *  Get the Company's country
      *
      *  @return int
      */
-    public function getParentCompanyID() {
-        return $this->_data['parent_company'];
+    public function getOriginCountry() {
+        return $this->_data['origin_country'];
     }
 
     /**

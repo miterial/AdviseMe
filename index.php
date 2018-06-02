@@ -1,12 +1,12 @@
 <?php get_header(); ?>
 <div class="tostart">
       <div class="container">
-        <h1>Решаете, что ещё посмотреть?</h1>
-        <p>Мы поможем отследить и запомнить любой из 2500.000 фильмов</p><a class="dark-button" href="index_signed.html">Хочу начать </a>
+        <h2 class="light-text">Решаете, что ещё посмотреть?</h2>
+        <p class="light-text">Мы поможем отследить и запомнить любой из 2500.000 фильмов</p><a class="dark-button" href="index_signed.html">Хочу начать </a>
       </div>
     </div>
     <div class="advantages">
-      <h1 class="text-center">Не тратьте время на поиски</h1>
+      <h2 class="text-center">Не тратьте время на поиски</h2>
       <p class="text-center">AdviseMe подберёт фильмы и сериалы специально для вас</p>
       <div class="advantages-rate">
         <div class="container">
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <h1 class="text-center">Доверьтесь своему вкусу</h1>
+      <h2 class="text-center">Доверьтесь своему вкусу</h2>
       <p class="text-center">AdviseMe лучше других знает, что вам понравится</p><a class="light-button text-center" href="index_signed.html">Хочу начать </a>
     </div>
 

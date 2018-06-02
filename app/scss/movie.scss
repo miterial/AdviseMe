@@ -57,10 +57,37 @@
 	.movie-detail--poster {
 		height: 70vh;
 		width: 100%;
-		background: url('https://i1.wp.com/www.heyuguys.com/images/2018/03/Westworld-Season-2-Image-12.jpg?fit=2700%2C1800&ssl=1');
 		background-repeat: no-repeat;
 		background-position: top;
 		background-size: cover;
+		opacity: 0.7;
+	}
+
+	.movie-info-block {
+		padding: 0 20px;
 	}
 	
+}
+
+#comments {
+	padding: 0;
+	.comment-list {
+		margin-left: 70px;
+		> li {
+			margin-bottom: 3em;
+			.comment-meta {
+				display: flex;
+				.fn {
+					display: inline;
+				}
+				.comment-date{
+					margin-left: auto;
+				}
+			}
+		}
+	}
+}
+
+.comment-meta {
+	margin-bottom: 0;
 }
