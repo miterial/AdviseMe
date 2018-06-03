@@ -3,6 +3,7 @@
     Template Name: Фильтр
     */
  get_header(); ?> 
+<form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter_form">
 <div class="filter">
       <h1 class="text-center py-3">НАЙТИ ФИЛЬМ</h1>
       <div class="filter--settings">
@@ -10,6 +11,8 @@
           <div class="row">
             <div class="col-lg-12 col-xs-12">
               <div class="sliders" id="regular-slider"></div>
+              <span class="d-none yearVal" id="min-year"></span>
+              <span class="d-none yearVal" id="max-year"></span>
             </div>
           </div>
           <div class="row">
@@ -22,7 +25,7 @@
                     $genresToPrint = get_genres($conn); 
                     for($i = 0; $i < count($genresToPrint); $i++) { ?>
                     <li>
-                      <input class="genreToggle tgl-skewed" type="checkbox" name="genreToggle" id="genreToggle_<?php echo $i ?>" value="<?php echo $genresToPrint[$i] ?>" data-toggle="toggle"/>
+                      <input class="genreToggle tgl-skewed" type="checkbox" name="genreToggle[]" id="genreToggle_<?php echo $i ?>" value="<?php echo $genresToPrint[$i] ?>" data-toggle="toggle"/>
                       <label class="tgl-btn" for="genreToggle_<?php echo $i ?>"><?php echo $genresToPrint[$i] ?></label>
                     </li>
                     
@@ -33,13 +36,12 @@
                 ?>
               </ul>
               <h2>Страны</h2>
-              <form method="post" action="">
               <ul class="toggles toggles__long" style="overflow: hidden;">
                 <?php
                     $genresToPrint = get_countries($conn); 
                     for($i = 0; $i < count($genresToPrint); $i++) { ?>
                     <li>
-                      <input class="countryToggle tgl-skewed" type="checkbox" name="countryToggle" id="countryToggle_<?php echo $i ?>" value="<?php echo  $genresToPrint[$i] ?>" data-toggle="toggle"/>
+                      <input class="countryToggle tgl-skewed" type="checkbox" name="countryToggle[]" id="countryToggle_<?php echo $i ?>" value="<?php echo  $genresToPrint[$i] ?>" data-toggle="toggle"/>
                       <label class="tgl-btn" for="countryToggle_<?php echo $i ?>"><?php echo $genresToPrint[$i] ?></label>
                     </li>
                     
@@ -49,7 +51,6 @@
                 ?>
               </ul>
               <button id="show_more">Показать больше</button>
-            </form>
             </div>
             <div class="col-lg-6 col-xs-12">
               <h2>Минимальная оценка</h2>
@@ -92,6 +93,7 @@
                 </div>
                 <div class="col-auto">
                   <button id="submit" type="submit" value="Submit" class="light-button">Начать поиск</button>
+                  <input type="hidden" name="action" value="myfilter">
                 </div>
               </div>
             </div>
@@ -101,12 +103,10 @@
     </div>
     <h1 class="text-center py-3">Рекомендованные фильмы</h1>
     <div class="filtered-movies container">
-        <div id="filterRes"></div>
+        <div id="filterRes">
       <?php
-              $current_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
               $params = array(
                 'posts_per_page' => 18, // количество постов на странице
-                'paged'           => $current_page // текущая страница
               );
               query_posts($params);
            
@@ -114,7 +114,7 @@
           $wp_query->is_home = false;
           if ( have_posts() ) : ?>
             <?php
-            /* Start the Loop */
+
             while ( have_posts() ) : the_post(); ?>
 
               <div class="filtered-movies--item">
@@ -137,8 +137,9 @@
 
             get_template_part( 'template-parts/post/content', 'none' );
 
-          endif; ?>
+          endif; ?></div>
       </div>
     </div>
+  </form>
 
 <?php get_footer(); ?>

@@ -241,3 +241,13 @@ a:hover {
 .light-text {
 	color: white;
 }
+
+/* OVERRIDE STYLES */
+.search-form .search-submit {
+  bottom: 0;
+  padding: 0 22px 0 0px;
+  position: absolute;
+  right: 0;
+  top: 14px;
+  background: $red;
+}

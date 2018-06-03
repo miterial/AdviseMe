@@ -5,7 +5,7 @@ var yearsSlider = document.getElementById('regular-slider');
 noUiSlider.create(yearsSlider, {
   connect: true,
   behaviour: 'tap',
-  start: [ 2010, 2018 ],
+  start: [ 2010, 2017 ],
   range: {
     // Starting at 500, step the value by 500,
     // until 4000 is reached. From there, step by 1000.
@@ -23,29 +23,16 @@ noUiSlider.create(yearsSlider, {
 
 });
 
-var snapValues = [];
+var yearValues = [
+
+   document.getElementById('min-year'),
+   document.getElementById('max-year')
+
+];
 
 yearsSlider.noUiSlider.on('update', function( values, handle ) {
-  snapValues[handle] = values[handle];
-  console.log(snapValues[handle]);
+  yearValues[handle].innerHTML = values[handle];
 });
-
-// Управление клавишами
-/*var handle = yearsSlider.querySelector('.noUi-handle');
-
-handle.addEventListener('keydown', function( e ) {
-
-  var value = Number( yearsSlider.noUiSlider.get() );
-
-  if ( e.which === 37 ) {
-    yearsSlider.noUiSlider.set( value - 10 );
-  }
-
-  if ( e.which === 39 ) {
-    yearsSlider.noUiSlider.set( value + 10 );
-  }
-});*/
-
 
 //Rating sliders
 

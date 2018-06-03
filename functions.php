@@ -19,7 +19,7 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 
 // Подключение стилей
 function enqueue_styles() {
-	wp_enqueue_style( 'style', get_stylesheet_uri() ); 
+	//wp_enqueue_style( 'style', get_stylesheet_uri() ); 
  	wp_enqueue_style( 'mystyle', get_template_directory_uri() . '/dist/css/mystyle.min.css');
 }
 add_action( 'wp_print_styles', 'enqueue_styles' );
@@ -448,22 +448,22 @@ function twentyseventeen_scripts() {
 	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/html5.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_script( 'twentyseventeen-skip-link-focus-fix', get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ), array(), '1.0', true );
+	//wp_enqueue_script( 'twentyseventeen-skip-link-focus-fix', get_theme_file_uri( '/assets/js/skip-link-focus-fix.js' ), array(), '1.0', true );
 
 	$twentyseventeen_l10n = array(
 		'quote'          => twentyseventeen_get_svg( array( 'icon' => 'quote-right' ) ),
 	);
 
-	if ( has_nav_menu( 'top' ) ) {
+	/*if ( has_nav_menu( 'top' ) ) {
 		wp_enqueue_script( 'twentyseventeen-navigation', get_theme_file_uri( '/assets/js/navigation.js' ), array( 'jquery' ), '1.0', true );
 		$twentyseventeen_l10n['expand']         = __( 'Expand child menu', 'twentyseventeen' );
 		$twentyseventeen_l10n['collapse']       = __( 'Collapse child menu', 'twentyseventeen' );
 		$twentyseventeen_l10n['icon']           = twentyseventeen_get_svg( array( 'icon' => 'angle-down', 'fallback' => true ) );
-	}
+	}*/
 
-	wp_enqueue_script( 'twentyseventeen-global', get_theme_file_uri( '/assets/js/global.js' ), array( 'jquery' ), '1.0', true );
+	//wp_enqueue_script( 'twentyseventeen-global', get_theme_file_uri( '/assets/js/global.js' ), array( 'jquery' ), '1.0', true );
 
-	wp_enqueue_script( 'jquery-scrollto', get_theme_file_uri( '/assets/js/jquery.scrollTo.js' ), array( 'jquery' ), '2.1.2', true );
+	//wp_enqueue_script( 'jquery-scrollto', get_theme_file_uri( '/assets/js/jquery.scrollTo.js' ), array( 'jquery' ), '2.1.2', true );
 
 	wp_localize_script( 'twentyseventeen-skip-link-focus-fix', 'twentyseventeenScreenReaderText', $twentyseventeen_l10n );
 
@@ -740,6 +740,96 @@ function admin_area_ID() {
   function posts_show_id($column_name, $id) {if ($column_name === 'wps_post_id') echo $id;}
   function posts_id_style() {print '<style>#wps_post_id{width:4em}</style>';}
 }
+
+function filter_movies() {
+	$myGenres = $_POST['genreToggle'];
+	$myCountries = $_POST['countryToggle'];
+
+	$minYear = $_POST['min-year'];
+	$maxYear = $_POST['max-year'];
+
+	$args = array(
+		'numberposts' => -1,
+		'posts_per_page' => 18,
+	);
+
+	if((isset( $myGenres ) && $myGenres) || (isset( $myCountries ) && $myCountries) || (isset( $minYear ) && $minYear) || (isset( $maxYear ) && $maxYear)) {
+		$args['meta_query'] = array( 'relation'=>'OR' );
+	}
+
+	if(isset( $myGenres ) ){
+		for($i = 0; $i <count($myGenres); $i++)
+		  $args['meta_query'][] = array(
+		    'key' => 'genres_m',
+		    'value'   => '"'.$myGenres[$i].'"',
+		    'compare' => 'LIKE'
+		  );
+		
+	}
+
+	if(isset( $myCountries ) ){
+	
+		for($i = 0; $i < count($myCountries); $i++) {
+		  $args['meta_query'][] = array(
+		    'key' => 'countries_m',
+		    'value'   => '"'.$myCountries[$i].'"',
+		    'compare' => 'LIKE'
+		  );
+		}
+	}
+
+	if(isset( $minYear ) || isset( $maxYear )) {
+		$args['meta_query'][] = array(
+			'key' => 'year_m',
+			'value' => array( $minYear, $maxYear ),
+			'type' => 'numeric',
+			'compare' => 'between'
+		);
+
+	}
+
+	// query
+	query_posts($args);
+           
+          $wp_query->is_archive = true;
+          $wp_query->is_home = false;
+          if ( have_posts() ) : ?>
+            <?php
+
+            while ( have_posts() ) : the_post(); ?>
+
+              <div class="filtered-movies--item">
+                <a href="<?php the_permalink(); ?>">
+                  <img src="<?php the_field('poster_m'); ?>" alt="movie" width="150px" style='height: 210px'/>
+                  <?php the_title()?>
+                </a>
+              </div>
+
+            <?php endwhile; ?>
+          <?php 
+
+            the_posts_pagination( array(
+              'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
+              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
+              'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
+            ) );
+
+          else :
+
+            get_template_part( 'template-parts/post/content', 'none' );
+
+          endif; ?>
+
+	<?php wp_reset_query();
+	wp_die();
+}
+
+add_action('wp_ajax_myfilter', 'filter_movies'); 
+add_action('wp_ajax_nopriv_myfilter', 'filter_movies');
+
+
+add_action('wp_ajax_filterSingle', 'filter_movies_single'); 
+add_action('wp_ajax_nopriv_filterSingle', 'filter_movies_single');
 
 /**
  * Функции регистрации
