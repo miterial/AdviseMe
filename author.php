@@ -1,7 +1,4 @@
-<?php get_header(); ?>
-
-<?php
-require_once dirname( __FILE__ ) . '/inc/AM_Movie.php';
+<?php get_header(); 
 
 // Установка переменной текущего автора $curauth
 $curauth = (isset($_GET['author_name'])) ? get_user_by('slug', $author_name) : get_userdata(intval($author));
@@ -18,11 +15,12 @@ $likedMovies = array();
 $dislikedMovies = array();
 
 // Оценённые фильмы
-$sqlLike = sprintf("SELECT * FROM users_movies WHERE id_user ='%d'", $idUser);
+$sqlLike = sprintf("SELECT * FROM users_movies WHERE id_user ='%d' ORDER BY id DESC", $idUser);
 $result = $connection->query($sqlLike);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
       // Информация о фильме, с которым взаимодействовал пользователь
+      //TODO: Выбирать последнюю поставленную оценку/список
       $idMovie = $row["id_movie"];
       $idList = $row["id_list"];
       $rate = $row["rate"];
@@ -35,15 +33,19 @@ if ($result->num_rows > 0) {
               $nameMovie = $rowMovie["title"];
           }
         }
+        // Если это последняя (актуальная) запись по данному фильму
+       /* if(!strcmp($likedMovies[$i]->getMovieTitle(), $nameMovie) || 
+          !strcmp($dislikedMovies[$i]->getMovieTitle(), $nameMovie)) {*/
       // Добавление фильма в массивы по спискам
-      $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
+          $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
 
-      if($idPost) {
-        if($idList == 1)
-          $likedMovies[] = new AM_Movie($idPost, $rDate, $rate);
-        else
-          $dislikedMovies[] = new AM_Movie($idPost, $rDate);
-      }
+          if($idPost) {
+            if($idList == 1)
+              $likedMovies[] = new AM_Movie($idMovie, $idPost, $rDate, $rate);
+            else
+              $dislikedMovies[] = new AM_Movie($idMovie, $idPost, $rDate);
+          }
+        /*}*/
     }
   }
      else echo "нет фильмов" .'</br>';
@@ -58,14 +60,15 @@ if ($result->num_rows > 0) {
 
       <nav id="profiletabs">
         <ul class="clearfix">
-          <li><a href="#bio" class="sel">Обо мне</a></li>
+          <li><a href="#bio">Обо мне</a></li>
           <li><a href="#lists">Списки фильмов</a></li>
+          <li><a href="#recommended" class="sel">Рекомендации</a></li>
           <li><a href="#reviews">Отзывы</a></li>
           <li><a href="#settings">Настройки</a></li>
         </ul>
       </nav>
       
-      <section id="bio">
+      <section id="bio" class="hidden">
         <?php echo $about; ?>
       </section>
       
@@ -73,9 +76,9 @@ if ($result->num_rows > 0) {
         <h2>Просмотренные фильмы</h2>
         <?php if(count($likedMovies) > 0) :
           foreach($likedMovies as $lm) :
-                $getpost = get_post($lm->getPostId()); ?>
+                 ?>
                 <div class="userlist-movie">
-                  <a href="<?php echo $getpost->guid; ?>"><?php echo $getpost->post_title; ?></a> 
+                  <a href="<?php echo $lm->getMovieLink(); ?>"><?php echo $lm->getMovieTitle(); ?></a> 
                   <div>
                     Оценка: <span class="inline"><?php echo $lm->getRate();?></span>
                     Дата: <span class="inline"><?php echo $lm->getDate();?></span>
@@ -88,16 +91,34 @@ if ($result->num_rows > 0) {
         <h2>Нежелательные фильмы</h2>
         <?php if(count($dislikedMovies) > 0) :
           foreach($dislikedMovies as $lm) :
-                $getpost = get_post($lm->getPostId()); ?>
-                <div class="d-flex justify-space-between">
-                  <a href="<?php echo $getpost->guid; ?>"><?php echo $getpost->post_title; ?></a> 
+                 ?>
+                <div class="userlist-movie">
+                  <a href="<?php echo $lm->getMovieLink(); ?>"><?php echo $lm->getMovieTitle(); ?></a> 
                   <div>
-                    <span class="inline"><?php echo $lm->getDate();?></span>
+                    Дата: <span class="inline"><?php echo $lm->getDate();?></span>
                   </div>
                 </div>
           <?php endforeach;
            else : echo "Нет нежелательных фильмов";
         endif;
+        ?>
+      </section>
+      <section id="recommended">
+        <?php
+
+          $connection = db_connect();
+            // Получение ID всех фильмов, кроме текущего и всех, с которыми уже было сравнение
+            $moviesIDs = array();
+            $sqlMovie = "SELECT id FROM movies";
+            $result = $connection->query($sqlMovie);
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $id = $row["id"];
+                    $m = new Recommendation();
+                    $m->compareMoviePair($id);
+                }
+            }
+            $connection->close();
         ?>
       </section>
       

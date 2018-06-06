@@ -748,11 +748,8 @@ function filter_movies() {
 	$minYear = $_POST['min-year'];
 	$maxYear = $_POST['max-year'];
 
-    $cur_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	$args = array(
-		'numberposts' => -1,
-		'posts_per_page' => 18,
-		'paged' => $cur_page,
+		'posts_per_page' => -1,
 	);
 
 	if((isset( $myGenres ) && $myGenres) || (isset( $myCountries ) && $myCountries) || (isset( $minYear ) && $minYear) || (isset( $maxYear ) && $maxYear)) {
@@ -791,14 +788,12 @@ function filter_movies() {
 	}
 
 	// query
-	query_posts($args);
+	$posts = new WP_Query($args);
            
-          $wp_query->is_archive = true;
-          $wp_query->is_home = false;
-          if ( have_posts() ) : ?>
+          if ( $posts->have_posts() ) : ?>
             <?php
 
-            while ( have_posts() ) : the_post(); ?>
+            while ( $posts->have_posts() ) : $posts->the_post(); ?>
 
               <div class="filtered-movies--item">
                 <a href="<?php the_permalink(); ?>">
@@ -810,11 +805,7 @@ function filter_movies() {
             <?php endwhile; ?>
           <?php 
 
-            the_posts_pagination( array(
-              'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
-              'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
-            ) );
+            
 
           else :
 
@@ -822,7 +813,7 @@ function filter_movies() {
 
           endif; ?>
 
-	<?php wp_reset_query();
+	<?php wp_reset_postdata(); 
 	wp_die();
 }
 
@@ -896,11 +887,37 @@ function rate_movie() {
 add_action('wp_ajax_rateMovie', 'rate_movie'); 
 add_action('wp_ajax_nopriv_rateMovie', 'rate_movie');
 
+function dislike_movie() {
+	$id = $_POST['movieID_dislike'];
+	$date = date("d.m.Y");
+
+	$user = new AM_User();
+  	$userID = $user->getUserInfoFromDB("id");
+
+	$conn = db_connect();
+	$sqlSetStars = "INSERT INTO users_movies (id_user, id_list, id_movie, rate, rateDate) VALUES('". $userID ."', '2', '". $id ."', '0', '". $date ."')";
+	if (!mysqli_query($conn, $sqlSetStars)) {
+		echo'error query';
+	}
+	$conn->close();
+	wp_die();
+}
+add_action('wp_ajax_dislikeMovie', 'dislike_movie'); 
+add_action('wp_ajax_nopriv_dislikeMovie', 'dislike_movie');
+
 /**
  * Функции регистрации
  */
 require get_parent_theme_file_path( '/inc/registration.php' );
 
+/**
+ * Класс для создания фильма
+ */
+require get_parent_theme_file_path( '/inc/AM_Movie.php' );
+/**
+ * Рекоммендательные функции
+ */
+require get_parent_theme_file_path( '/inc/recommendation/AM_Recommended.php' );
 /**
  * Функции получения данных текущего пользователя из БД
  */

@@ -61,10 +61,25 @@
 
 	.movie-info-block {
 		padding: 0 20px;
+
+		form {
+			display: inline-block;
+			
+			#dislikeBtn {
+				background: transparent;
+				color: $red;
+				padding: 0; 
+			}
+		}
 	}
 	
 }
-
+#respond {
+	margin-top: 30px;
+	#commentform {
+		width: 100%;
+	}
+}
 #comments {
 	padding: 0;
 	.comment-list {

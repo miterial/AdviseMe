@@ -17,6 +17,35 @@
 		padding-top: 3%;
 		padding-bottom: 3%;
 
+		#show_more {
+			background: transparent;
+			text-align: center;
+			color: $violet;
+			padding: 20px 0;
+			position: relative;
+			left: 36%;
+			&:before, &:after {
+				content: "";
+				position: relative;
+				display: inline-block;
+				width: 50%;
+				height: 1px;
+				vertical-align: middle;
+				background: #f0f0f0;
+			}
+			&:before {
+				left: -.5em;
+				margin: 0 0 0 -50%;
+			}
+			&:after {
+				left: .5em;
+				margin: 0 -50% 0 0;
+			}
+			&:hover {
+				color: white;
+			}
+		}
+
 		#regular-slider {
 			margin-top:0.2em;
 			margin-bottom: 5em;

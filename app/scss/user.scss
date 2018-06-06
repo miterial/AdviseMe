@@ -42,7 +42,7 @@
   height: 50px;
 }
 
-#profiletabs ul { list-style: none; display: block; width: 70%; height: 50px; }
+#profiletabs ul { list-style: none; display: block; height: 50px; }
 #profiletabls ul li { float: left; }
 #profiletabs ul li a { 
   display: block;
@@ -129,10 +129,13 @@ html[xmlns] .clearfix { display: block; }
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin: 0 auto 1em;;
+  margin: 0 auto 1em;
+  border-bottom: 1px solid $yellow;
+  padding-bottom: 10px;
   a {
     font-size: 1.5em;
     color: $red;
+    max-width: 40%;
   }
   span {
         margin-right: 24px;

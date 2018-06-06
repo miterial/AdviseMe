@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <h1 class="text-center py-3">Рекомендованные фильмы</h1>
+    <h1 class="text-center py-3">Рекомендуемые фильмы</h1>
     <div class="filtered-movies container">
         <div id="filterRes">
       <?php

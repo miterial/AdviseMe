@@ -45,7 +45,8 @@ if ( post_password_required() ) {
 			'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous', 'twentyseventeen' ) . '</span>',
 			'next_text' => '<span class="screen-reader-text">' . __( 'Next', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
 		) );
-
+	else :
+		echo "Комментариев нет";
 	endif; // Check for have_comments().
 
 	// If comments are closed and there are comments, let's leave a little note, shall we?

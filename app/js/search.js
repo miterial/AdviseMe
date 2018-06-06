@@ -21,7 +21,7 @@ $(document).ready(function() {
 			data:filter.serialize(),
 			type:filter.attr('method'), // POST
 			beforeSend: function() {
-                $('#filterRes').html('beforeSend');
+                $('#filterRes').html('Поиск...');
             },
 		     success: function(data){                
 		     		console.log('success');
