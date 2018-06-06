@@ -1,9 +1,27 @@
+<?php
+// Поставить оценку фильму
+  $user = new AM_User();
+  $userID = $user->getUserInfoFromDB("id");
+  $rate = 0;
+
+  // Оценивал ли пользователь этот фильм
+  $conn = db_connect();
+  $sqlGetStars = sprintf("SELECT * FROM users_movies WHERE id_user ='%s' AND id_movie ='$s'", $userID, get_field("movie_id_m"));
+  $result = $conn->query($sqlGetStars);
+  if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $rate = $row['rate'];
+        $date = $row['date'];
+      }
+  }
+  $conn->close();
+  ?>
 <div class="movie-detail">
       <div class="movie-detail--poster" style="background-image: url('<?php the_field('bg_movie_m') ?>');" ></div>
       <div class="container upper">
         <div class="media mb-3"><img class="movie-detail--info mr-3" src="<?php the_field('poster_m')?>" alt="movie" width="180px"/>
           <div class="media-body align-self-end">
-            <h3 class="mt-0"><?php the_title(); ?> (<?php the_field('year_m')?>)</h3>
+            <h2 class="mt-0"><?php the_title(); ?> (<?php the_field('year_m')?>)</h2>
             <p class="text-muted"><?php the_field('alt-name_m')?></p>
           </div>
         </div>
@@ -13,16 +31,37 @@
         <div class="row mt-3">
           <div class="col-lg-2 col-sm-12 p-0">
             <div class="movies-related">
-              <p>Похожие сериалы</p>
+              <p>Похожие фильмы</p>
               <label><a href="#"><img src="/dist/images/jjposter.jpg" alt="movie image" width="100%"/> Джессика Джонс</a></label>
-              <label class="mt-3"><img src="/dist/images/jjposter.jpg" alt="movie image" width="100%"/> Джессика Джонс</label>
-              <label class="mt-3"><img src="/dist/images/jjposter.jpg" alt="movie" width="100%"/> Джессика Джонс</label>
-              <label class="mt-3"><img src="/dist/images/jjposter.jpg" alt="movie" width="100%"/> Джессика Джонс</label>
-              <label class="mt-3"><img src="/dist/images/jjposter.jpg" alt="movie" width="100%"/> Джессика Джонс</label><a href="movies.html">Показать больше</a>
+             <a href="movies.html">Показать больше</a>
             </div>
           </div>
           <div class="col-lg-10 col-sm-12">
             <div class="movie-info-block">
+              <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="rate_form">
+              <div class="stars">
+                <p>Моя оценка: </p>
+                <select id="movieRatingSelect" name = "movieRatingSelect">
+                  <option value="" name="movieRating1"></option>
+                  <option value="1" name="movieRating2">1</option>
+                  <option value="2" name="movieRating3">2</option>
+                  <option value="3" name="movieRating4">3</option>
+                  <option value="4" name="movieRating5">4</option>
+                  <option value="5" name="movieRating6">5</option>
+                  <option value="6" name="movieRating7">6</option>
+                  <option value="7" name="movieRating8">7</option>
+                  <option value="8" name="movieRating9">8</option>
+                  <option value="9" name="movieRating10">9</option>
+                  <option value="10" name="movieRating11">10</option>
+                </select>
+                <input type="hidden" name="action" value="rateMovie">
+                <p class="d-none" id="myRate"><?php echo $rate; ?></p>
+                <p class="valToInsert d-none" id="movieID"><?php the_field('movie_id_m'); ?></p>
+                <div id="output"></div>
+              </div>
+              </form>
+              
+                
             <p class="d-inline">AdviseMe: </p>
             <p class="d-inline font-weight-bold" id="rateAM"><?php the_field('am_score') ?></p>
             <p class="d-inline">IMDB: </p>
@@ -74,3 +113,47 @@
         </div>
       </div>
     </div>
+<script type="text/javascript">
+   $(document).ready(function() {
+    var rateTag = $('#myRate').innerHTML;
+    if(rateTag != "0") {
+      $('#movieRatingSelect').barrating('set', rateTag);
+    }
+      $('#movieRatingSelect').barrating({
+        theme: 'fontawesome-stars',
+        onSelect: function(value, text, event) {
+            event.preventDefault();
+          if (typeof(event) !== 'undefined') {
+            var filter = $('#rate_form');
+            $("#myRate").innerHTML = value;
+
+            $("#rate_form .valToInsert").each(function(i,v){
+                  $("#rate_form").append(
+                      $("<input type='hidden' />").attr({
+                          name: $(this).attr('id'),
+                          value: $(this).text()
+                      })
+                  )
+
+              });
+            $.ajax({
+              url:filter.attr('action'),
+              data:filter.serialize(),
+              type:filter.attr('method'),
+                 success: function(data){  
+                  $("#output").html(data);              
+                    console.log('success');
+                 },
+                error: function(jqXHR, textStatus, errorThrown) {
+                        console.log('error: ' + errorThrown);
+                    },
+            });
+
+          } else {
+            // rating was selected programmatically
+            // by calling `set` method
+          }
+        }
+      });
+   });
+</script>

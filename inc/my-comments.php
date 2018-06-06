@@ -111,5 +111,7 @@ $inpage = 5;
  
 		echo $page_navi;
 	}
+	else
+		echo "Нет комментариев";
 }
 ?>

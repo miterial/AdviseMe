@@ -105,8 +105,10 @@
     <div class="filtered-movies container">
         <div id="filterRes">
       <?php
+      $cur_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
               $params = array(
                 'posts_per_page' => 18, // количество постов на странице
+                'paged'          => $cur_page,
               );
               query_posts($params);
            

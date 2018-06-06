@@ -1,0 +1,19 @@
+.movie-info-block .stars {
+    display: flex;
+    height: 3em;
+    p {
+        margin: 0;
+    }
+}
+.br-wrapper {
+    height: 100%;
+    margin: 0 15px;
+}
+.br-theme-fontawesome-stars .br-widget  {
+    height: auto;
+     a.br-active, a.br-selected {
+        &::after {
+            color: $yellow;
+        }
+     }
+}
