@@ -25,14 +25,7 @@ if ($result->num_rows > 0) {
       $idList = $row["id_list"];
       $rate = $row["rate"];
       $rDate = $row["rateDate"];
-      // Название фильма по id
-      $sqlMovie = sprintf("SELECT * FROM movies WHERE id ='%d'", $idMovie);
-      $resMovie = $connection->query($sqlMovie);
-      if ($resMovie->num_rows > 0) {
-          while($rowMovie = $resMovie->fetch_assoc()) {
-              $nameMovie = $rowMovie["title"];
-          }
-        }
+      
         // Если это последняя (актуальная) запись по данному фильму
        /* if(!strcmp($likedMovies[$i]->getMovieTitle(), $nameMovie) || 
           !strcmp($dislikedMovies[$i]->getMovieTitle(), $nameMovie)) {*/
@@ -105,20 +98,9 @@ if ($result->num_rows > 0) {
       </section>
       <section id="recommended">
         <?php
-
-          $connection = db_connect();
-            // Получение ID всех фильмов, кроме текущего и всех, с которыми уже было сравнение
-            $moviesIDs = array();
-            $sqlMovie = "SELECT id FROM movies";
-            $result = $connection->query($sqlMovie);
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    $id = $row["id"];
-                    $m = new Recommendation();
-                    $m->compareMoviePair($id);
-                }
-            }
-            $connection->close();
+          $m = new Recommendation();
+          //$m->fillTable();
+          $m->getUserRecommendations($idUser);
         ?>
       </section>
       

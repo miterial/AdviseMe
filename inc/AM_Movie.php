@@ -13,18 +13,40 @@ class AM_Movie {
         $this->id_movie = $idMovie;
     }
 
-    function getMovieTitle() {
-        $getpost = get_post($this->id_post);
+    function getPostId($idMovie = -1) {
+        if($this->id_post == -1) {
+            $this->idPost = $this->getPostIdByMovieId($idMovie);
+        }
+        return $this->id_post;
+    }
+
+    function getMovieTitle($idMovie = -1) {
+        $getpost = get_post($this->getPostId($idMovie));
         return $getpost->post_title;
     }
 
-    function getMovieLink() {
-        $getpost = get_post($this->id_post);
+    function getMovieLink($idMovie = -1) {
+        $getpost = get_post($this->getPostId($idMovie));
         return $getpost->guid;
     }
 
-    function getPostId() {
-        return $this->id_post;
+    /**
+    *   Функция получения постера фильма из БД
+    *   @return string ссылка на постер
+    **/
+    function getMovieImage($idMovie) {
+        $image = "";
+        $conection = db_connect();
+
+        $sqlMovie = sprintf("SELECT * FROM movies WHERE id ='%d'", $idMovie);
+        $resMovie = $connection->query($sqlMovie);
+        if ($resMovie->num_rows > 0) {
+          while($rowMovie = $resMovie->fetch_assoc()) {
+              $image = $rowMovie["poster_url"];
+          }
+        }
+        $connection->close();
+        return $image;
     }
 
     function getRate() {
@@ -33,6 +55,25 @@ class AM_Movie {
 
     function getDate() {
         return $this->date;
+    }
+
+    function getPostIdByMovieId($idMovie) {
+            // Название фильма по id
+        $connection = db_connect();
+        $sqlMovie = sprintf("SELECT * FROM movies WHERE id ='%d'", $idMovie);
+        $resMovie = $connection->query($sqlMovie);
+        if ($resMovie->num_rows > 0) {
+          while($rowMovie = $resMovie->fetch_assoc()) {
+              $nameMovie = $rowMovie["title"];
+          }
+        }
+        // ID поста по названию фильма
+        $id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
+        if(!$id) {
+            echo "Фильма '" . $nameMovie ."' нет" . '</br>';
+            return -1;
+        }
+        return $id;
     }
 
     /**
