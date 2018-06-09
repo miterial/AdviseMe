@@ -10,5 +10,6 @@
 
 ?>
 <div class="footer text-center">
-	<p>AdviseMe</p>
+	<h2>AdviseMe</h2>
+    <p>Автор: Светлана Гума</p>
 </div><!-- .site-info -->

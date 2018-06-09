@@ -21,7 +21,7 @@
       <div class="container upper">
         <div class="media mb-3"><img class="movie-detail--info mr-3" src="<?php the_field('poster_m')?>" alt="movie" width="180px"/>
           <div class="media-body align-self-end">
-            <h2 class="mt-0"><?php the_title(); ?> (<span class="text-muted"><?php the_field('year_m')?>)</span></h2>
+            <h2 class="mt-0"><?php the_title(); ?> <span class="text-muted">(<?php the_field('year_m')?>)</span></h2>
             <p class="text-muted"><?php the_field('alt_name_m')?></p>
           </div>
         </div>

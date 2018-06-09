@@ -185,7 +185,8 @@ a:hover {
   width: 200px;
   height: 40px;
   outline: none;
-  margin: 0 auto; }
+  margin: 0 auto;
+  line-height: 1.8em; }
 
 .movieslists input[id^="tab"]:hover + label, .movieslists input[id^="tab"]:checked + label, .show-more:hover {
   border-bottom: 5px solid #9d1927; }
@@ -244,6 +245,12 @@ a:hover {
   top: 14px;
   background: #9d1927; }
 
+.navbar h1 {
+  margin-bottom: 0; }
+
+.navbar-brand {
+  font-size: inherit; }
+
 .nav-item button {
   background: none;
   color: rgba(0, 0, 0, 0.5);
@@ -252,6 +259,9 @@ a:hover {
   padding: 8px 10px; }
   .nav-item button:hover {
     color: rgba(0, 0, 0, 0.7); }
+
+.nav-item a:hover {
+  color: #9d1927; }
 
 .search-bar {
   vertical-align: middle;
@@ -536,6 +546,9 @@ html[xmlns] .clearfix {
     font-size: 1.5em;
     color: #291427; }
 
+.tostart p {
+  font-size: 16px; }
+
 .advantages {
   margin-top: 5%;
   margin-bottom: 5%; }
@@ -558,6 +571,9 @@ html[xmlns] .clearfix {
 .invitation {
   padding-top: 5%;
   padding-bottom: 5%; }
+
+.filter .col-auto {
+  margin: 0 auto; }
 
 .filter p {
   height: 3em; }
@@ -669,9 +685,58 @@ html[xmlns] .clearfix {
 .noUi-value {
   margin-top: 12px; }
 
+#loader {
+  display: none; }
+
+.sk-folding-cube {
+  width: 4em;
+  height: 4em;
+  position: relative;
+  margin: auto;
+  transform: rotateZ(45deg); }
+  .sk-folding-cube .sk-cube {
+    float: left;
+    width: 50%;
+    height: 50%;
+    position: relative;
+    transform: scale(1.1); }
+  .sk-folding-cube .sk-cube:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #9d1927;
+    animation: sk-folding-cube-angle 2.4s infinite linear both;
+    transform-origin: 100% 100%; }
+  .sk-folding-cube .sk-cube-2 {
+    transform: scale(1.1) rotateZ(90deg); }
+  .sk-folding-cube .sk-cube-3 {
+    transform: scale(1.1) rotateZ(180deg); }
+  .sk-folding-cube .sk-cube-4 {
+    transform: scale(1.1) rotateZ(270deg); }
+  .sk-folding-cube .sk-cube-2:before {
+    animation-delay: 0.3s; }
+  .sk-folding-cube .sk-cube-3:before {
+    animation-delay: 0.6s; }
+  .sk-folding-cube .sk-cube-4:before {
+    animation-delay: 0.9s; }
+
+@keyframes sk-folding-cube-angle {
+  0%, 10% {
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0; }
+  25%, 75% {
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1; }
+  90%, 100% {
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0; } }
+
 .movieslists {
-  padding-top: 5%;
-  padding-bottom: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   background-color: #fec343;
   position: relative; }
   .movieslists section {
@@ -712,17 +777,25 @@ html[xmlns] .clearfix {
 
 .show-more {
   color: black;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 5px solid transparent; }
+  .show-more .fa {
+    color: #9d1927; }
 
 .show-more:hover {
   color: black;
   text-decoration: none; }
+
+.slick-slide img {
+  max-height: 210px; }
+
+.slick-next, .slick-prev {
+  top: 37%; }
 
 .noUi-tooltip {
   display: none; }
@@ -735,6 +808,13 @@ html[xmlns] .clearfix {
   .movie-detail .upper {
     position: relative;
     top: -160px; }
+    .movie-detail .upper .text-muted {
+      font-size: 16px;
+      line-height: 28px;
+      display: inline-block;
+      vertical-align: top; }
+    .movie-detail .upper h2 > p {
+      text-align: center; }
     .movie-detail .upper .prediction {
       font-size: 1.2em;
       color: #9d1927;
@@ -822,6 +902,10 @@ html[xmlns] .clearfix {
   position: absolute;
   width: 100%;
   height: 100px;
-  line-height: 100px; }
-  .footer p {
+  line-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around; }
+  .footer p, .footer h2 {
+    color: white !important;
     margin-bottom: 0; }

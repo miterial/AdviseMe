@@ -1,10 +1,10 @@
 <?php
 
 function get_genres($connection, $movieid = -1) {
-    /*if (!mysqli_ping($connection)) {
+    if (!mysqli_ping($connection)) {
         //die("Connection failed: " . mysqli_connect_error());
         $connection = mysqli_connect($servername, $username, $password, $dbname); //переподключение при тайм-ауте
-    }*/
+    }
     $genres = array();
     if($movieid != -1) {
         $sqlById = sprintf("SELECT * FROM movies_genres WHERE id_movie='%s'", $movieid);
@@ -15,7 +15,7 @@ function get_genres($connection, $movieid = -1) {
                 $genresIDs[] = $row["id_genre"];
             }
             // получаем названия жанров по их id
-            /*for($i = 0; $i < count($genresIDs); $i++) {
+            for($i = 0; $i < count($genresIDs); $i++) {
                 $sql = sprintf("SELECT name FROM genres WHERE id =%s", $genresIDs[$i]);
                 $result = $connection->query($sql);
                 if ($result->num_rows > 0) {
@@ -25,13 +25,13 @@ function get_genres($connection, $movieid = -1) {
                 } else {
                     echo "Жанров с таким id нет: " . $genresIDs[$i] . '</br>';
                 }
-            }*/
+            }
         } else {
             //echo "Жанров нет: " . $movieid . '</br>';
         }
 
     }
-    /*else {
+    else {
     	$sql = 'SELECT * FROM genres';
         $result = $connection->query($sql);
         
@@ -42,8 +42,8 @@ function get_genres($connection, $movieid = -1) {
         } else {
             echo "Жанров нет";
         }
-    }*/
-    return $genresIDs;
+    }
+    return $genres;
 }
 
 function get_countries($connection, $movieid = -1) {

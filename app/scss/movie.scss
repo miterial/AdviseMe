@@ -4,11 +4,19 @@
 	.upper {
 		position: relative;
 		top: -160px;
-
+		.text-muted {
+			font-size: 16px;
+			line-height: 28px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		h2 > p {
+			text-align: center;
+		}
 		.prediction {
 			font-size: 1.2em;
 			color: $red;
-			font-weight: bold;
+			font-weight: bold; 
 		}
 
 		.movies-related {

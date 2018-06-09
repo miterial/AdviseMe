@@ -21,11 +21,12 @@ $(document).ready(function() {
 			data:filter.serialize(),
 			type:filter.attr('method'), // POST
 			beforeSend: function() {
-                $('#filterRes').html('Поиск...');
+		        $('#filterRes').html('');
+                $('#loader').show();
             },
-		     success: function(data){                
-		     		console.log('success');
-		            $('#filterRes').html(data);
+		     success: function(data){       
+                $('#loader').hide();
+		        $('#filterRes').html(data);
 		     },
      		error: function(jqXHR, textStatus, errorThrown) {
                 console.log('error: ' + jqXHR.status);

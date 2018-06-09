@@ -56,27 +56,6 @@ ratingSlider1.noUiSlider.on('update', function( values, handle ) {
   imdb.innerHTML = values[handle];
 });
 
-// Kinopoisk slider
-var ratingSlider2 = document.getElementById('rate-slider2');
-
-noUiSlider.create(ratingSlider2, {
-  connect: true,
-  behaviour: 'tap',
-  start: 0,
-  range: {
-    'min': 0,
-    'max': 10
-  },
-  step: 0.5
-});
-
-var kinopiosk = document.getElementById('rate-text2');
-
-ratingSlider2.noUiSlider.on('update', function( values, handle ) {
-  kinopiosk.innerHTML = values[handle];
-});
-
-
 // AdviseMe Slider
 var ratingSlider3 = document.getElementById('rate-slider3');
 

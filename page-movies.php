@@ -22,7 +22,7 @@
                 <?php
                   $conn = db_connect();
                   if($conn != null) {
-                    $genresToPrint = get_genres($conn); 
+                    $genresToPrint = get_genres($conn);
                     for($i = 0; $i < count($genresToPrint); $i++) { ?>
                     <li>
                       <input class="genreToggle tgl-skewed" type="checkbox" name="genreToggle[]" id="genreToggle_<?php echo $i ?>" value="<?php echo $genresToPrint[$i] ?>" data-toggle="toggle"/>
@@ -66,17 +66,6 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-3 col-md-2 col-sm-3">
-                  <p>Кинопоиск</p>
-                </div>
-                <div class="col-lg-8 col-md-9 col-sm-7">
-                  <div class="sliders" id="rate-slider2"></div>
-                </div>
-                <div class="col-lg-1 col-md-1 col-sm-2">
-                  <p id="rate-text2">0.0</p>  
-                </div>
-              </div>
-              <div class="row">
                 <div class="col-lg-3 col-sm-2">
                   <p>AdviseMe</p>
                 </div>
@@ -101,9 +90,16 @@
         </div>
       </div>
     </div>
-    <h1 class="text-center py-3">Рекомендуемые фильмы</h1>
+    <h1 class="text-center py-3">Список фильмов</h1>
     <div class="filtered-movies container">
+      <div class='sk-folding-cube' id="loader">
+            <div class='sk-cube sk-cube-1'></div>
+            <div class='sk-cube sk-cube-2'></div>
+            <div class='sk-cube sk-cube-4'></div>
+            <div class='sk-cube sk-cube-3'></div>
+          </div>
         <div id="filterRes">
+
       <?php
       $cur_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
               $params = array(

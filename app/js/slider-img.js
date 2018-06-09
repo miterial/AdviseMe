@@ -1,6 +1,8 @@
 $(document).ready(function(){
-  $(".myslider").slick({
-
+  $(".myslider")./*each(function() {
+    $(this).*/slick({
+  autoplay: true,
+  autoplaySpeed: 2000,
   infinite: true,
   slidesToShow: 4,
   arrows: true,
@@ -30,5 +32,7 @@ $(document).ready(function(){
       settings: "unslick" // destroys slick
 
     }]
-  })
+  /*});*/
+  });
+
 });
