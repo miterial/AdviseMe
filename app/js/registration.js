@@ -1,6 +1,8 @@
 // Get the modal
-window.onload = function(){
+document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
 	var modal = document.getElementById('modal-registration');
+		console.log(modal);
 	var modalLogin = document.getElementById('modal-login');
 
 	// Get the button that opens the modal
@@ -13,6 +15,7 @@ window.onload = function(){
 
 	// When the user clicks the button, open the modal 
 	btn.onclick = function() {
+		console.log('regBtn click');
 	    modal.style.display = "block";
 	}
 	btnAuth.onclick = function() {
@@ -34,4 +37,5 @@ window.onload = function(){
 	    	modalLogin.style.display = "none";
 	    }
 	}
-}
+
+});

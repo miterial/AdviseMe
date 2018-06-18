@@ -16,7 +16,6 @@
   <div class="collapse navbar-collapse mr-auto flex-row-reverse" id="mainnavbar">
     <ul class="navbar-nav navbar-right">
       <li class="nav-item"><a class="nav-link" href="movies">Фильмы</a></li>
-      <li class="nav-item"><a class="nav-link" href="collections">Подборки</a></li>
       <li class="nav-item"><a class="nav-link" href="about">О нас</a></li>
       <li class="nav-item">
         <?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
@@ -26,7 +25,7 @@
         <li class="nav-item"><button class="nav-link" id="authBtn">Вход </button></li>
         <?php else : ?>
           
-        <li class="nav-item"><a id="profileBtn" href="<?php bloginfo('url'); ?>/?author=<?php echo get_current_user_id(); ?>">Профиль </a></li>
+        <li class="nav-item"><a class="nav-link" id="profileBtn" href="<?php bloginfo('url'); ?>/?author=<?php echo get_current_user_id(); ?>">Профиль </a></li>
       <?php endif;?>
       <li class="nav-item">
       </li>

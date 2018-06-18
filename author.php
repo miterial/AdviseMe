@@ -25,6 +25,14 @@ if ($result->num_rows > 0) {
       $idList = $row["id_list"];
       $rate = $row["rate"];
       $rDate = $row["rateDate"];
+
+      $sqlMovie = sprintf("SELECT * FROM movies WHERE id ='%d'", $idMovie);
+        $resMovie = $connection->query($sqlMovie);
+        if ($resMovie->num_rows > 0) {
+          while($rowMovie = $resMovie->fetch_assoc()) {
+              $nameMovie = $rowMovie["title"];
+          }
+        }
       
         // Если это последняя (актуальная) запись по данному фильму
        /* if(!strcmp($likedMovies[$i]->getMovieTitle(), $nameMovie) || 
@@ -34,9 +42,9 @@ if ($result->num_rows > 0) {
 
           if($idPost) {
             if($idList == 1)
-              $likedMovies[] = new AM_Movie($idMovie, $idPost, $rDate, $rate);
+              $likedMovies[] = new AM_Movie($idMovie, $rDate, $idPost, $rate);
             else
-              $dislikedMovies[] = new AM_Movie($idMovie, $idPost, $rDate);
+              $dislikedMovies[] = new AM_Movie($idMovie,  $rDate, $idPost);
           }
         /*}*/
     }
@@ -100,7 +108,34 @@ if ($result->num_rows > 0) {
         <?php
           $m = new Recommendation();
           //$m->fillTable();
-          $m->getUserRecommendations($idUser);
+          $userMovies = $m->getUserRecommendations($idUser);
+          if(count($userMovies) > 0) {
+          echo "<h2>Всего фильмов: ".count($userMovies).'</h2>';
+
+          $connection = db_connect();
+          for($i = 0; $i < 90; $i++) {
+            $sqlMovieName = sprintf("SELECT * FROM movies WHERE id ='%d'", $userMovies[$i]->getMovieID());
+            $result = $connection->query($sqlMovieName);
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                  $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $row['title']));
+                  if($idPost) { 
+                    //echo "postID: ".$idPost.'</br>';
+                    $userMovies[$i]->setPostId($idPost);
+                  }
+                }
+              }
+            }
+            $connection->close();
+            echo '<div id="filterRes">';
+            for($i = 0; $i < 90; $i++) {
+               echo '<div class="filtered-movies--item">';
+                echo '<a href="'.$userMovies[$i]->getMovieLink() .'"><img src="'. $userMovies[$i]->getMovieImage($userMovies[$i]->getMovieID()) .'" alt="movie" width="150px" style="height: 210px"/>'.$userMovies[$i]->getMovieTitle().'</a></div>';
+            }
+             echo '</div>';
+             echo '<div class="text-center"><a href="#">Показать больше</a></div>';
+           }
+           else echo "<h3>Нет рекомендованных фильмов</h3>";
         ?>
       </section>
       
@@ -115,7 +150,7 @@ if ($result->num_rows > 0) {
         
         <p class="setting"><span>Логин <img src="images/edit.png" alt="Изменить"></span> <?php echo $curauth->nickname; ?></p>
         
-        <p class="setting"><span>О себе <img src="images/edit.png" alt="Изменить"></span> <?php $about; ?></p>
+        <p class="setting"><span>О себе <img src="images/edit.png" alt="Изменить"></span> Мне нравится фантастика и комедии. Люблю выбирать фильмы :) </p>
       </section>
     </div><!-- @end #content -->
   </div><!-- @end #w -->

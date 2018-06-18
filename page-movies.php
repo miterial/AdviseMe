@@ -35,6 +35,9 @@
                   
                 ?>
               </ul>
+              
+            </div>
+            <div class="col-lg-6 col-xs-12">
               <h2>Страны</h2>
               <ul class="toggles toggles__long" style="overflow: hidden;">
                 <?php
@@ -51,31 +54,31 @@
                 ?>
               </ul>
               <button id="show_more">Показать больше</button>
+              
             </div>
-            <div class="col-lg-6 col-xs-12">
-              <h2>Минимальная оценка</h2>
-              <div class="row">
-                <div class="col-lg-3 col-sm-2">
+          </div>
+          <div class="row row-rate"> 
+          <h2>Минимальная оценка</h2>
+          <div class="row">
+                <div class="offset-lg-3 col-lg-1 col-sm-2">
                   <p>IMDB</p>
                 </div>
-                <div class="col-lg-8 col-sm-9">
+                <div class="col-lg-4 col-sm-9">
                   <div class="sliders" id="rate-slider1"></div>
                 </div>
                 <div class="col-lg-1 col-sm-1">
-                  <p id="rate-text1">0.0</p>
+                  <p class="yearVal" id="rate-text1">0.0</p>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-3 col-sm-2">
+                <div class="offset-lg-3 col-lg-1 col-sm-2">
                   <p>AdviseMe</p>
                 </div>
-                <div class="col-lg-8 col-sm-9">
+                <div class="col-lg-4 col-sm-9">
                   <div class="sliders" id="rate-slider3"></div>
                 </div>
                 <div class="col-lg-1 col-sm-1">
-                  <p id="rate-text3">0.0</p>
+                  <p class="yearVal" id="rate-text3">0.0</p>
                 </div>
-              </div>
+            </div>
               <div class="row">
                 <div class="col-auto">
                   <button class="light-button">Сбросить фильтр</button>
@@ -86,7 +89,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -127,7 +129,7 @@
 
             the_posts_pagination( array(
               'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
+              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>',
               'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
             ) );
 

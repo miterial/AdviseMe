@@ -557,20 +557,32 @@ html[xmlns] .clearfix {
     padding-top: 5%;
     padding-bottom: 5%;
     background-color: #fec343; }
+    .advantages .advantages-rate h2 {
+      text-align: left;
+      white-space: normal; }
   .advantages .advantages-lists {
     padding-top: 5%;
     padding-bottom: 5%;
     background-color: #ec9322;
     text-align: right; }
+    .advantages .advantages-lists h2 {
+      text-align: right;
+      white-space: normal; }
   .advantages .advantages-filter {
     padding-top: 5%;
     padding-bottom: 5%;
     margin-bottom: 5%;
     background-color: #fec343; }
+    .advantages .advantages-filter h2 {
+      text-align: left;
+      white-space: normal; }
 
 .invitation {
   padding-top: 5%;
   padding-bottom: 5%; }
+
+.filter .row-rate {
+  flex-direction: column; }
 
 .filter .col-auto {
   margin: 0 auto; }
@@ -646,20 +658,21 @@ html[xmlns] .clearfix {
   .filter .filter--settings .toggles__long {
     height: 140px; }
 
-.filtered-movies #filterRes {
+#filterRes {
   display: flex;
   flex-wrap: wrap;
-  text-align: center; }
+  text-align: center;
+  justify-content: center; }
 
-.filtered-movies .filtered-movies--item {
+.filtered-movies--item {
   display: block;
   margin-left: 2em;
   max-width: 150px;
   text-align: center;
   min-height: 270px; }
-  .filtered-movies .filtered-movies--item a {
+  .filtered-movies--item a {
     font-size: 12px; }
-    .filtered-movies .filtered-movies--item a:hover {
+    .filtered-movies--item a:hover {
       color: #9d1927;
       font-weight: normal; }
 
@@ -813,8 +826,10 @@ html[xmlns] .clearfix {
       line-height: 28px;
       display: inline-block;
       vertical-align: top; }
-    .movie-detail .upper h2 > p {
+    .movie-detail .upper .media-body {
       text-align: center; }
+      .movie-detail .upper .media-body h2 {
+        margin-bottom: 0; }
     .movie-detail .upper .prediction {
       font-size: 1.2em;
       color: #9d1927;
@@ -823,9 +838,14 @@ html[xmlns] .clearfix {
       border: 1px solid #f4f4f4;
       padding: 1em;
       text-align: center; }
+      .movie-detail .upper .movies-related label {
+        margin-bottom: 15px; }
+      .movie-detail .upper .movies-related img {
+        max-width: 130px; }
       .movie-detail .upper .movies-related p {
         font-weight: bold;
-        color: #9d1927; }
+        color: #ec9322;
+        font-size: 1.2em; }
     .movie-detail .upper .movie-detail--list {
       font-weight: normal; }
     .movie-detail .upper .movie-review {

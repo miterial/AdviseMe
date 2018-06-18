@@ -17,6 +17,8 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 	return;
 }
 
+global $wpdb;
+
 // Подключение стилей
 function enqueue_styles() {
 	//wp_enqueue_style( 'style', get_stylesheet_uri() ); 
@@ -748,12 +750,31 @@ function filter_movies() {
 	$minYear = $_POST['min-year'];
 	$maxYear = $_POST['max-year'];
 
+	$amScore = $_POST['rate-text3'];
+	$imdbScore = $_POST['rate-text1'];
+
 	$args = array(
 		'posts_per_page' => -1,
 	);
 
 	if((isset( $myGenres ) && $myGenres) || (isset( $myCountries ) && $myCountries) || (isset( $minYear ) && $minYear) || (isset( $maxYear ) && $maxYear)) {
 		$args['meta_query'] = array( 'relation'=>'AND' );
+	}
+
+	if(isset( $amScore ) ){
+		  $args['meta_query'][] = array(
+		    'key' => 'am_score',
+		    'value'   => '"'.$amScore.'"',
+		    'compare' => '>='
+		  );
+	}
+
+	if(isset( $imdbScore ) ){
+		  $args['meta_query'][] = array(
+		    'key' => 'imdb_score',
+		    'value'   => '"'.$imdbScore.'"',
+		    'compare' => '>='
+		  );
 	}
 
 	if(isset( $myGenres ) ){
@@ -777,7 +798,7 @@ function filter_movies() {
 		}
 	}
 
-	if(isset( $minYear ) || isset( $maxYear )) {
+	if(isset( $minYear ) && isset( $maxYear )) {
 		$args['meta_query'][] = array(
 			'key' => 'year_m',
 			'value' => array( $minYear, $maxYear ),
@@ -789,6 +810,7 @@ function filter_movies() {
 
 	// query
 	$posts = new WP_Query($args);
+	//echo $posts->post_count;
            
           if ( $posts->have_posts() ) : ?>
             <?php
@@ -804,9 +826,7 @@ function filter_movies() {
 
             <?php endwhile; ?>
           <?php 
-
-            
-
+          
           else :
 
             get_template_part( 'template-parts/post/content', 'none' );
@@ -819,54 +839,6 @@ function filter_movies() {
 
 add_action('wp_ajax_myfilter', 'filter_movies'); 
 add_action('wp_ajax_nopriv_myfilter', 'filter_movies');
-
-/*function filter_movies_single() {
-
-    $cur_page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-	$args = array(
-		'numberposts' => -1,
-		'posts_per_page' => 18,
-		'paged' => $cur_page,
-	);
-
-	// query
-	query_posts($args);
-           
-          $wp_query->is_archive = true;
-          $wp_query->is_home = false;
-          if ( have_posts() ) : ?>
-            <?php
-
-            while ( have_posts() ) : the_post(); ?>
-
-              <div class="filtered-movies--item">
-                <a href="<?php the_permalink(); ?>">
-                  <img src="<?php the_field('poster_m'); ?>" alt="movie" width="150px" style='height: 210px'/>
-                  <?php the_title()?>
-                </a>
-              </div>
-
-            <?php endwhile; ?>
-          <?php 
-
-            the_posts_pagination( array(
-              'prev_text' => twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'twentyseventeen' ) . '</span>',
-              'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'twentyseventeen' ) . '</span>' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ),
-              'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyseventeen' ) . ' </span>',
-            ) );
-
-          else :
-
-            get_template_part( 'template-parts/post/content', 'none' );
-
-          endif; ?>
-
-	<?php wp_reset_query();
-	wp_die();
-}
-
-add_action('wp_ajax_filterSingle', 'filter_movies_single'); 
-add_action('wp_ajax_nopriv_filterSingle', 'filter_movies_single');*/
 
 function rate_movie() {
 	$rate = $_POST['movieRatingSelect'];
@@ -904,6 +876,13 @@ function dislike_movie() {
 }
 add_action('wp_ajax_dislikeMovie', 'dislike_movie'); 
 add_action('wp_ajax_nopriv_dislikeMovie', 'dislike_movie');
+
+function getpostid($nameMovie) {
+	 $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
+	 if ($idPost)
+	 	return $idPost;
+	 return -1;
+}
 
 /**
  * Функции регистрации

@@ -10,8 +10,11 @@
 			display: inline-block;
 			vertical-align: top;
 		}
-		h2 > p {
+		.media-body {
 			text-align: center;
+			h2 {
+				margin-bottom: 0;
+			}
 		}
 		.prediction {
 			font-size: 1.2em;
@@ -24,9 +27,18 @@
 			padding: 1em;
 			text-align: center;
 
+			label {
+				margin-bottom: 15px;
+			}
+
+			img {
+				max-width: 130px;
+			}
+
 			p {
 				font-weight: bold;
-				color: $red;
+				color: $orange;
+				font-size: 1.2em;
 			}
 		}
 

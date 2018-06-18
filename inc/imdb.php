@@ -18,6 +18,9 @@ class IMDBBot
 
     // Optional OMDb (poster) API key
     private $apik = 'a782074';
+    //private $apik = 'ffb9fc23';
+    //private $apik = '51733191';
+    //private $apik = '52422c61';
 
     /**
      * Uses the main OMDB API (?i= or ?t=)

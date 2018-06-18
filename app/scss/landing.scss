@@ -8,13 +8,19 @@
 	margin-bottom: 5%;
 
 	.advantages-rate {
-		margin-top: 5%;
+		h2{
+		text-align: left;
+		white-space: normal;}
+		margin-top: 5%; 
 		padding-top: 5%;
 		padding-bottom: 5%;
 		background-color: $yellow;
 	}
 
 	.advantages-lists {
+		h2{
+		text-align: right;
+		white-space: normal;}
 		padding-top: 5%;
 		padding-bottom: 5%;
 		background-color: $orange;
@@ -22,6 +28,9 @@
 	}
 
 	.advantages-filter {
+		h2{
+		text-align: left;
+		white-space: normal;}
 		padding-top: 5%;
 		padding-bottom: 5%;
 		margin-bottom: 5%;

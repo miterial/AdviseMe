@@ -32,8 +32,35 @@
           <div class="col-lg-2 col-sm-12 p-0">
             <div class="movies-related">
               <p>Похожие фильмы</p>
-              <label><a href="#"><img src="/dist/images/jjposter.jpg" alt="movie image" width="100%"/> Джессика Джонс</a></label>
-             <a href="movies.html">Показать больше</a>
+              <?php 
+                  $m = new Recommendation();
+                  $similarMoviesIds = $m->getSimilarMovies(get_field('movie_id_m'));
+                  $connection = db_connect();
+
+                  $similarMovies = array();
+
+                  $max1 = (count($similarMoviesIds) > 10) ? 10 : count($similarMoviesIds);
+                  for($i = 0; $i < $max1; $i++) {
+                    $sqlMovieName = sprintf("SELECT * FROM movies WHERE id ='%s'", $similarMoviesIds[$i]);
+                    $result = $connection->query($sqlMovieName);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                          $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $row['title']));
+                          if($idPost) { 
+                            $similarMovies[] = new AM_Movie($similarMoviesIds[$i],"",$idPost);
+                            //echo "postID: ".$idPost.'</br>';
+                          }
+                        }
+                      }
+                    }
+                    $max2 = (count($similarMovies) > 10) ? 10 : count($similarMovies);
+                    $connection->close();
+                    for($i = 0; $i < $max2; $i++) {
+                       echo ' <label><a href="'.$similarMovies[$i]->getMovieLink().'"><img src="'.$similarMovies[$i]->getMovieImage($similarMovies[$i]->getMovieID()).'" alt="movie image" width="100%"/></br>'.$similarMovies[$i]->getMovieTitle().'</a></label>';
+                    }
+                      ?>
+             
+             
             </div>
           </div>
           <div class="col-lg-10 col-sm-12">
@@ -73,8 +100,6 @@
               <p class="d-inline font-weight-bold" id="rateAM"><?php the_field('am_score') ?></p>
               <p class="d-inline">IMDB: </p>
               <p class="d-inline font-weight-bold" id="rateIMDB"><?php the_field('imdb_score') ?></p>
-              <p class="d-inline">Кинопоиск: </p>
-              <p class="d-inline font-weight-bold" id="rateKP"><?php the_field('kp_score') ?></p>
               <p class="font-weight-bold mt-3">Жанр: 
               <?php
                 $genres = get_field('genres_m');
@@ -101,16 +126,18 @@
                 $dirs = get_field('director_m');
                 if($dirs)
                   foreach($dirs as $d) { ?>
-                    <a href="#"> <?php echo $d; ?></a>
+                    <a href="#"> <?php echo $d .','; ?></a>
                 <?php  }
                 ?>
               <p class="movie-makers mt-3">В ролях</p>
               <?php
                 $actors = get_field('actors_m');
-                if($actors)
-                  foreach($actors as $a) { ?>
-                    <a href="#"> <?php echo $a; ?></a>
+                if($actors) {
+                  $max3 = (count($actors) > 7) ? 7 : count($actors);
+                  for($i = 0; $i < $max3; $i++) {?>
+                    <a href="#"> <?php echo $actors[$i] .','; ?></a>
                 <?php  }
+              }
                 ?>
               <p class="movie-makers mt-3">Отзывы пользователей</p>
                 <?php comments_template(); ?>

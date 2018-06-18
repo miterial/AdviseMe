@@ -10,22 +10,22 @@
   <div class="advantages-rate">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6"><img src="<?php echo home_url(); ?>wp-content/uploads/2018/06/am_recom_screen.png"/></div>
         <div class="col-lg-6">
           <h2>Получайте автоматические рекомендации</h2>
           <p>Наши прогнозы зависят только от вас! Чем больше фильмов вы просмотрите, тем больше получите в рекомендациях</p>
         </div>
+         <div class="col-lg-6"><img src="<?php echo home_url(); ?>/wp-content/uploads/2018/06/am_recom_screen.png"/></div>
       </div>
     </div>
   </div>
   <div class="advantages-lists">
     <div class="container">
       <div class="row">
+        <div class="col-lg-6"><img src="<?php echo home_url(); ?>/wp-content/uploads/2018/06/am_rate_screen.png"/></div>
         <div class="col-lg-6">
-          <h2>Оценивайте фильмы и сериалы</h2>
+          <h2>Оценивайте фильмы и делитесь впечатлениями</h2>
           <p>Ставьте оценки и пишите отзывы к фильмам и сериалам, которые вы посмотрели, чтобы сделать наш прогноз более точным</p>
         </div>
-        <div class="col-lg-6"><img src="<?php echo home_url(); ?>wp-content/uploads/2018/06/am_rate_screen.png"/></div>
       </div>
     </div>
   </div>

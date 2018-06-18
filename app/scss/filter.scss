@@ -1,4 +1,7 @@
 .filter {
+    .row-rate {
+        flex-direction: column;
+    }
 	.col-auto {
 		margin: 0 auto;
 	}
@@ -103,12 +106,12 @@
 	}
 }
 
-.filtered-movies {
 
 	#filterRes {
 		display: flex;
 		flex-wrap: wrap;
 		text-align: center;
+        justify-content: center;
 	}
 
 	.filtered-movies--item {
@@ -127,6 +130,8 @@
 		}
 	}
 
+
+.filtered-movies {
 	.pagination {
 		display: inline-block;
 		text-align: center;

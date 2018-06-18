@@ -13,20 +13,28 @@ class AM_Movie {
         $this->id_movie = $idMovie;
     }
 
+    function setPostId($idPost) {
+        $this->id_post = $idPost;
+    }
+
+    function getMovieID() {
+        return $this->id_movie;
+    }
+
     function getPostId($idMovie = -1) {
         if($this->id_post == -1) {
-            $this->idPost = $this->getPostIdByMovieId($idMovie);
+            $this->idPost = $this->getPostIdByMovieId($this->getMovieID());
         }
         return $this->id_post;
     }
 
     function getMovieTitle($idMovie = -1) {
-        $getpost = get_post($this->getPostId($idMovie));
+        $getpost = get_post($this->getPostId($this->getMovieID()));
         return $getpost->post_title;
     }
 
     function getMovieLink($idMovie = -1) {
-        $getpost = get_post($this->getPostId($idMovie));
+        $getpost = get_post($this->getPostId($this->getMovieID()));
         return $getpost->guid;
     }
 
@@ -36,7 +44,7 @@ class AM_Movie {
     **/
     function getMovieImage($idMovie) {
         $image = "";
-        $conection = db_connect();
+        $connection = db_connect();
 
         $sqlMovie = sprintf("SELECT * FROM movies WHERE id ='%d'", $idMovie);
         $resMovie = $connection->query($sqlMovie);
@@ -68,12 +76,12 @@ class AM_Movie {
           }
         }
         // ID поста по названию фильма
-        $id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
-        if(!$id) {
+          $idPost = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s", $nameMovie));
+        if(!$idPost) {
             echo "Фильма '" . $nameMovie ."' нет" . '</br>';
             return -1;
         }
-        return $id;
+        return $idPost;
     }
 
     /**

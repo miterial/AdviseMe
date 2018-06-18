@@ -3,7 +3,7 @@
 * Класс Recommendation используется для получения списка фильмов, похожих на
 * те, которые просмотрел пользователь
 **/
-class Recommendation {
+class Recommendation { 
     function __construct() {
 
     }
@@ -26,7 +26,7 @@ class Recommendation {
         $connection->close();
     }
     /**
-    *   Функция получения коэффициентов Жаккара для одного фильма по всем остальным
+    *   Функция получения коэффициентов Танимото для одного фильма по всем остальным
     **/
     function compareMoviePair($idMovie) {
             echo "ID текущего фильма: ".$idMovie . '</br>';
@@ -75,7 +75,7 @@ class Recommendation {
 
             // Получение коэффициента для двух фильмов
             for($i = 0; $i < count($moviesIDs); $i++){
-                $value = $this->getJaccardCoefficient(count($movieGenres), $genresCountToCompare[$i],
+                $value = $this->getTanimotoCoefficient(count($movieGenres), $genresCountToCompare[$i],
                                                         $commonGenresCount[$i]);
                 if($value >= 0.6)
                     $this->writePairToDatabase($value, $idMovie, $moviesIDs[$i]);
@@ -87,19 +87,19 @@ class Recommendation {
 
     }    
     /**
-    *   Функция нахождения коэффициента Жаккара для двух фильмов
+    *   Функция нахождения коэффициента Танимото для двух фильмов
     **/
-    function getJaccardCoefficient($a, $b, $c) {
+    function getTanimotoCoefficient($a, $b, $c) {
         if($a == 0 || $b == 0)
             return 0;
         return ($c / ($a + $b - $c));
     }
     /**
-    *   Функция записи коэффициента Жаккара для двух фильмов в БД
+    *   Функция записи коэффициента Танимото для двух фильмов в БД
     **/
     function writePairToDatabase($coefficient, $idMovie1, $idMovie2) {
         $connection = db_connect();
-        // Получение ID всех фильмов, кроме текущего и всех, с которыми уже было сравнение
+
         $sqlCoef = "INSERT INTO coefficients (id_movie_1, id_movie_2, value) VALUES('". $idMovie1 ."', '". $idMovie2 ."', ". $coefficient .")";
             if (!mysqli_query($connection, $sqlCoef)) {
                 echo mysqli_error($connection);
@@ -112,10 +112,11 @@ class Recommendation {
     *   @return одномерный массив объектов AM_Movie
     **/
     function getUserRecommendations($id_user) {
+        $connection = db_connect();
         // Массив итоговых объектов AM_Movie
         $userMovies = array();
         // Массив уникальных id рекомендованных фильмов
-        $movieIDs = array();
+        $moviesIDs = array();
 
         // Получение всех фильмов, которые оценил пользователь
         $sqlUserMovies = sprintf("SELECT * FROM users_movies WHERE id_user ='%d'", $id_user);
@@ -125,20 +126,16 @@ class Recommendation {
                 if($row['id_list'] != 2) {  // Если фильм не помечен нежелательным
                     $temp = array();
                     $curID = $row['id_movie'];
-                    if($moviesIDs && in_array($curID, $moviesIDs)) {   // Если в массив попадает id 
-                        $moviesIDs = array_diff($moviesIDs, [$curID]);  // удаляем его из общего массива
-                        $moviesIDs = array_values($moviesIDs);      // переиндексация, чтобы не было пустях значений.
-                    }
                     // Выбор фильмов
                     $curMovieSimilarsIDs = $this->getSimilarMovies($curID);
-                    // Составление списка фильмов
-                    foreach ($curMovieSimilarsIDs as $id) {
-                        array_push($moviesIDs, $id);  // добавление всех id по текущему фильму
-                        $moviesIDs = array_unique($moviesIDs);  // Удаление повторяющихся фильмов
-                    }
 
+                    // Составление списка фильмов
+                    foreach ($curMovieSimilarsIDs as $similarId) {
+                        array_push($moviesIDs, $similarId);  // добавление всех id по текущему фильму
+                    }
                 }
             }
+            $moviesIDs = array_unique($moviesIDs);
             foreach($moviesIDs as $id) {
                 array_push($userMovies, new AM_Movie($id));
             }
@@ -152,17 +149,24 @@ class Recommendation {
     *   @return массив объектов AM_Movie
     **/
     function getSimilarMovies($id_movie) {
+        $connection = db_connect();
         // Массив ID рекомендованных фильмов
-        $recommendedMovieID = array();
+        $recommendedMovieIDs = array();
 
-        $sqlRecomMovies = sprintf("SELECT * FROM coefficients WHERE id_movie_1 ='%d' AND value > '0,7'", $id_movie);
+        $sqlRecomMovies = sprintf("SELECT * FROM coefficients WHERE value > '0.8' AND (id_movie_1 ='%d' OR id_movie_2 = '%d')", $id_movie,$id_movie);
         $resultRecom = $connection->query($sqlRecomMovies);
         if ($resultRecom->num_rows > 0) {
             while($rowRecom = $resultRecom->fetch_assoc()) {
-                $recommendedMovieID[] = $row['id_movie_2'];
+                $recommendedMovieIDs[] = $rowRecom['id_movie_1'];
+                $recommendedMovieIDs[] = $rowRecom['id_movie_2'];
             }
         }
-
-        return $recommendedMovieID;
+        $recommendedMovieIDs = array_unique($recommendedMovieIDs);
+        if(in_array($id_movie, $recommendedMovieIDs)) {   // Если в массив попадает id 
+            $recommendedMovieIDs = array_diff($recommendedMovieIDs, [$id_movie]);  // удаляем его из общего массива
+            $recommendedMovieIDs = array_values($recommendedMovieIDs);      // переиндексация, чтобы не было пустях значений.
+        }
+        shuffle($recommendedMovieIDs);
+        return $recommendedMovieIDs;
     }
 }

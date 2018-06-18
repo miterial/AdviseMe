@@ -7,7 +7,7 @@ ini_set('max_allowed_packet', 524288000);
 // ?fill_db=3000&cats=1|3&tags=tag1|tag2|tag3
 // ?fill_db_comments=3000
 
-function fill_db(array $iddd, array $titleee, array $alttitle, array $date, array $overview, array $posterrr, array $bg, array $am, array $kp, array $imdb, array $genres,array $countries, array $dirs, array $acts) {
+function fill_db(array $iddd, array $titleee, array $alttitle, array $date, array $overview, array $posterrr, array $bg, array $am, array $kp, array $imdb, array $genres,array $countries, array $dirs, array $acts, $insert) {
 
 	$movieTitle = $titleee;
 	$movieID = $iddd;
@@ -25,11 +25,11 @@ function fill_db(array $iddd, array $titleee, array $alttitle, array $date, arra
 	wp_suspend_cache_addition( true ); // отключаем кэширование
 
 	// Контент
-	// ?fill_db=3000&cats=1|3&tags=tag1|tag2|tag3
 		$limit = count($movieID);
 
+if($insert) {
 		//запускаем цикл
-		/*for( $i = 0; $i < $limit; $i++ ){
+		for( $i = 0; $i < $limit; $i++ ){
 
 			//добавление в БД wordpress
 			$postid = wp_insert_post( array(
@@ -44,8 +44,8 @@ function fill_db(array $iddd, array $titleee, array $alttitle, array $date, arra
 			}
 			//else echo "error";
 			flush();
-		}*/
-
+		}
+}
 
 		//изменение полей
 		$args = array(
@@ -130,10 +130,3 @@ function fill_db_with_metadata_add_views( $post_id, $movie_id, $movie_title,$alt
 	update_post_meta( $post_id, 'director_m', $value[$i++] );
 	update_post_meta( $post_id, 'actors_m', $value[$i++] );
 }
-
-function get_random( $data = '' ){
-	$arg = explode('|', $data);
-	$rand_key = array_rand($arg);
-	return $arg[$rand_key];
-}
-
